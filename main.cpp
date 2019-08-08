@@ -22,7 +22,8 @@ int main(int argc, char** argv) {
     
     EventHandler *evh = new EventHandler();
     
-    evh->init("/dev/input/event2");
+    Robot * r = new Robot();
+    evh->init("/dev/input/event2", r);
    
     evh->event_loop();
     

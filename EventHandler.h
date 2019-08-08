@@ -25,8 +25,10 @@
 #include <linux/input.h>
 #include <string>
 
+
 #include </usr/local/include/libevdev-1.0/libevdev/libevdev.h>
 
+#include "Robot.h"
 
 class EventHandler {
 public:
@@ -34,7 +36,7 @@ public:
     EventHandler(const EventHandler& orig);
     virtual ~EventHandler();
     
-    void init(std::string device_name);
+    void init(std::string device_name, Robot *r_in);
     
     void print_abs_bits(struct libevdev *dev, int axis);
     void print_code_bits(struct libevdev *dev, unsigned int type, unsigned int max);
@@ -49,6 +51,7 @@ private:
 	const char *file;
 	int fd;
 	int rc = 1;
+        Robot *r;
 
 };
 

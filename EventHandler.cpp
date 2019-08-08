@@ -49,7 +49,7 @@ EventHandler::~EventHandler() {
  */
 
 
-void EventHandler::init(std::string device_name){
+void EventHandler::init(std::string device_name, Robot *r_in){
 
     fd = open(device_name.c_str(), O_RDONLY);
     if (fd < 0) {
@@ -62,6 +62,9 @@ void EventHandler::init(std::string device_name){
             fprintf(stderr, "Failed to init libevdev (%s)\n", strerror(-rc));
             exit(0);
     }
+    
+    r = r_in;
+    
     printf("Input device ID: bus %#x vendor %#x product %#x\n",
                     libevdev_get_id_bustype(dev),
                     libevdev_get_id_vendor(dev),

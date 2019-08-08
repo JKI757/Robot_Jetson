@@ -19,8 +19,25 @@ public:
     Robot();
     Robot(const Robot& orig);
     virtual ~Robot();
+    
+    int rad_to_deg(float rad);
+    float deg_to_rad(int deg);
+    
+    void drive(int speed, int turn_angle);
+    int turn_right(int turn_angle);
+    int turn_left(int turn_angle);
+    int drive_forward(int speed);
+    int drive_reverse(int speed);
+    
+    int change_speed(int speed);
+    int turn(int angle);
+    
 private:
-
+    
+    int turn_angle;
+    int heading;
+    int speed;
+    
 };
 
 #endif /* ROBOT_H */
