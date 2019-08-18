@@ -1,9 +1,9 @@
-build/Debug/GNU-Linux/Robot.o: Robot.cpp \
+build/Debug/GNU-Linux/GpioHandler.o: GpioHandler.cpp \
  /usr/local/include/libevdev-1.0/libevdev/libevdev.h \
- /usr/local/include/gpiod.h Robot.h
+ /usr/local/include/gpiod.h GpioHandler.h
 
 /usr/local/include/libevdev-1.0/libevdev/libevdev.h:
 
 /usr/local/include/gpiod.h:
 
-Robot.h:
+GpioHandler.h:

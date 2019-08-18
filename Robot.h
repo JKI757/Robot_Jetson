@@ -12,7 +12,10 @@
  */
 
 #ifndef ROBOT_H
+#include <iostream>
 #define ROBOT_H
+
+enum mode { MANUAL, AUTOMATIC, TANK, GPS, LIDAR_AUTOMATIC};
 
 class Robot {
 public:
@@ -32,11 +35,23 @@ public:
     int change_speed(int speed);
     int turn(int angle);
     
+    mode get_mode();
+    
 private:
     
-    int turn_angle;
-    int heading;
-    int speed;
+    int m_turn_angle;
+    int m_heading;
+    int m_speed;
+    bool m_driving;
+    bool m_lidar_on;
+   
+    bool m_left_motor_on;
+    bool m_right_motor_on;
+    
+    int m_left_motor_speed;
+    int m_right_motor_speed;
+    
+    mode m_current_mode;
     
 };
 

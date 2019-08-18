@@ -201,6 +201,34 @@ int EventHandler::event_loop()
             printf("::::::::::::::::::::: re-synced ::::::::::::::::::::::\n");
         } else if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
             print_event(&ev);
+
+        switch (ev.code) {
+            case ABS_RX:
+            {
+                if (ev.value > 0) {
+                    //calculate the angle based on value
+                    r->turn_right(20);
+                } else if (ev.value < 0) {
+                    r->turn_left(20);
+                }
+            };
+            case ABS_RY:
+            {
+                if (ev.value < 0) {
+                    //calculate the angle based on value
+                    r->drive_forward(20);
+                } else if (ev.value > 0) {
+                    r->drive_reverse(20);
+                }
+
+            }
+        }
+        
+        
+        
+        
+        
+        
     } while (rc == LIBEVDEV_READ_STATUS_SYNC || rc == LIBEVDEV_READ_STATUS_SUCCESS || rc == -EAGAIN);
 
     if (rc != LIBEVDEV_READ_STATUS_SUCCESS && rc != -EAGAIN)

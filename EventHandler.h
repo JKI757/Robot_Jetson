@@ -48,8 +48,8 @@ public:
 
 private:
 	struct libevdev *dev = NULL;
-	const char *file;
-	int fd;
+	const char *file = NULL;
+	int fd=0;
 	int rc = 1;
         Robot *r;
 
