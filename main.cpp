@@ -13,20 +13,20 @@
 
 #include <cstdlib>
 #include "EventHandler.h"
-
+#include <memory>
 
 /*
  * 
  */
 int main(int argc, char** argv) {
     
-    EventHandler *evh = new EventHandler();
+    std::shared_ptr<EventHandler> evh = std::make_shared<EventHandler>();
+        
+    std::shared_ptr<Robot> r = std::make_shared<Robot>();
     
-    Robot * r = new Robot();
     evh->init("/dev/input/event2", r);
-   
+    
     evh->event_loop();
     
     return 0;
 }
-

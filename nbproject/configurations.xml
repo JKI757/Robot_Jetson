@@ -5,10 +5,12 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>EventHandler.h</itemPath>
-      <itemPath>../gpio_test/GpioHandler.h</itemPath>
       <itemPath>Robot.h</itemPath>
+      <itemPath>adafruitdcmotor.h</itemPath>
+      <itemPath>adafruitmotorhat.h</itemPath>
       <itemPath>definitions.h</itemPath>
-      <itemPath>i2cInterface.h</itemPath>
+      <itemPath>i2cdevice.h</itemPath>
+      <itemPath>pwm.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -18,10 +20,12 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>EventHandler.cpp</itemPath>
-      <itemPath>../gpio_test/GpioHandler.cpp</itemPath>
       <itemPath>Robot.cpp</itemPath>
-      <itemPath>i2cInterface.cpp</itemPath>
+      <itemPath>adafruitdcmotor.cpp</itemPath>
+      <itemPath>adafruitmotorhat.cpp</itemPath>
+      <itemPath>i2cdevice.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
+      <itemPath>pwm.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -45,14 +49,14 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <standard>8</standard>
+          <standard>11</standard>
           <incDir>
             <pElem>/usr/local/lib</pElem>
           </incDir>
           <incFile>
             <pElem>/usr/local/include/libevdev-1.0/libevdev/libevdev.h</pElem>
-            <pElem>/usr/local/include/gpiod.h</pElem>
-            <pElem>/usr/local/include/i2c.h</pElem>
+            <pElem>/usr/local/include/wiringPi.h</pElem>
+            <pElem>/usr/local/include/wiringPiI2C.h</pElem>
           </incFile>
         </ccTool>
         <linkerTool>
@@ -61,15 +65,13 @@
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>evdev</linkerLibLibItem>
-            <linkerLibFileItem>/usr/local/lib/libgpiod.a</linkerLibFileItem>
-            <linkerLibLibItem>i2c</linkerLibLibItem>
+            <linkerLibLibItem>wiringPi</linkerLibLibItem>
+            <linkerLibLibItem>pthread</linkerLibLibItem>
+            <linkerLibLibItem>crypt</linkerLibLibItem>
+            <linkerLibLibItem>rt</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="../gpio_test/GpioHandler.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../gpio_test/GpioHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="EventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
@@ -78,13 +80,25 @@
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="adafruitdcmotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="adafruitdcmotor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="adafruitmotorhat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="adafruitmotorhat.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="i2cInterface.cpp" ex="false" tool="1" flavor2="0">
+      <item path="i2cdevice.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="i2cInterface.h" ex="false" tool="3" flavor2="0">
+      <item path="i2cdevice.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pwm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pwm.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -107,10 +121,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="../gpio_test/GpioHandler.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../gpio_test/GpioHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="EventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
@@ -119,13 +129,25 @@
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="adafruitdcmotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="adafruitdcmotor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="adafruitmotorhat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="adafruitmotorhat.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="i2cInterface.cpp" ex="false" tool="1" flavor2="0">
+      <item path="i2cdevice.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="i2cInterface.h" ex="false" tool="3" flavor2="0">
+      <item path="i2cdevice.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pwm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="pwm.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

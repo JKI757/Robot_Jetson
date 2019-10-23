@@ -1,48 +1,29 @@
-#include <wiringPiI2C.h>
+MIT License
+
+Copyright (c) 2018, Tom Clarke
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+//#include <wiringPiI2C.h>
 #include <stdio.h>
-
-#define word    unsigned short
-
-#define ADAFRUIT_MOTORHAT       0x60
-
-#define PWM_M1_PWM      8
-#define PWM_M1_IN2      9
-#define PWM_M1_IN1      10
-#define PWM_M2_PWM      13
-#define PWM_M2_IN2      12
-#define PWM_M2_IN1      11
-#define PWM_M3_PWM      2
-#define PWM_M3_IN2      3
-#define PWM_M3_IN1      4
-#define PWM_M4_PWM      7
-#define PWM_M4_IN2      6
-#define PWM_M4_IN1      5
-
-#define PWM_FREQUENCY   1600.0
-#define PWM_PRESCALE    0xFE
-
-#define PWM_MODE1       0x00
-#define PWM_MODE2       0x01
-#define PWM_LED0_ON_L   0x06
-#define PWM_LED0_ON_H   0x07
-#define PWM_LED0_OFF_L  0x08
-#define PWM_LED0_OFF_H  0x09
-
-#define PWM_RESTART     0x80
-#define PWM_SLEEP       0x10
-#define PWM_ALLCALL     0x01
-#define PWM_INVRT       0x10
-#define PWM_OUTDRV      0x04
-
-#define PWM_ALL_LED_ON_L        0xFA
-#define PWM_ALL_LED_ON_H        0xFB
-#define PWM_ALL_LED_OFF_L       0xFC
-#define PWM_ALL_LED_OFF_H       0xFD
-
-#define MOTOR_FORWARD   1
-#define MOTOR_BACK      2
-#define MOTOR_BRAKE     3
-#define MOTOR_RELEASE   4
+#include "hat.h"        
 
 void setAllPWM(word i2c, word on, word off){
         wiringPiI2CWriteReg8(i2c, PWM_ALL_LED_ON_L, on & 0xFF);

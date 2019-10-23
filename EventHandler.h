@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <linux/input.h>
 #include <string>
-
+#include <memory>
 
 #include </usr/local/include/libevdev-1.0/libevdev/libevdev.h>
 
@@ -36,7 +36,7 @@ public:
     EventHandler(const EventHandler& orig);
     virtual ~EventHandler();
     
-    void init(std::string device_name, Robot *r_in);
+    void init(std::string device_name, std::shared_ptr<Robot> r_in);
     
     void print_abs_bits(struct libevdev *dev, int axis);
     void print_code_bits(struct libevdev *dev, unsigned int type, unsigned int max);
@@ -45,13 +45,15 @@ public:
     int print_event(struct input_event *ev);
     int print_sync_event(struct input_event *ev);
     int event_loop();
-
+    int set_kill(bool k) {kill = k;}
 private:
 	struct libevdev *dev = NULL;
 	const char *file = NULL;
 	int fd=0;
 	int rc = 1;
-        Robot *r;
+        std::shared_ptr<Robot> r;
+        
+        bool kill;
 
 };
 

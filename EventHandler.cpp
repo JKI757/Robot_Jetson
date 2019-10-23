@@ -14,6 +14,7 @@
 #include "EventHandler.h"
 
 EventHandler::EventHandler() {
+    kill = false;
 }
 
 EventHandler::EventHandler(const EventHandler& orig) {
@@ -49,7 +50,7 @@ EventHandler::~EventHandler() {
  */
 
 
-void EventHandler::init(std::string device_name, Robot *r_in){
+void EventHandler::init(std::string device_name, std::shared_ptr<Robot>r_in){
 
     fd = open(device_name.c_str(), O_RDONLY);
     if (fd < 0) {
@@ -193,43 +194,88 @@ int EventHandler::event_loop()
         struct input_event ev;
         rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_NORMAL|LIBEVDEV_READ_FLAG_BLOCKING, &ev);
         if (rc == LIBEVDEV_READ_STATUS_SYNC) {
-            printf("::::::::::::::::::::: dropped ::::::::::::::::::::::\n");
+            //printf("::::::::::::::::::::: dropped ::::::::::::::::::::::\n");
             while (rc == LIBEVDEV_READ_STATUS_SYNC) {
                     print_sync_event(&ev);
                     rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_SYNC, &ev);
             }
-            printf("::::::::::::::::::::: re-synced ::::::::::::::::::::::\n");
+           // printf("::::::::::::::::::::: re-synced ::::::::::::::::::::::\n");
         } else if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
             print_event(&ev);
-
-        switch (ev.code) {
-            case ABS_RX:
+        std::cout << "current robot mode: " <<  r->get_text_mode() << std::endl;
+        switch (ev.code){
+            case BTN_WEST:{
+                if (ev.value == 1)
+                    r->toggle_mode();
+            };break;
+            case BTN_START:
             {
-                if (ev.value > 0) {
-                    //calculate the angle based on value
-                    r->turn_right(20);
-                } else if (ev.value < 0) {
-                    r->turn_left(20);
-                }
-            };
-            case ABS_RY:
-            {
-                if (ev.value < 0) {
-                    //calculate the angle based on value
-                    r->drive_forward(20);
-                } else if (ev.value > 0) {
-                    r->drive_reverse(20);
-                }
+                if (ev.value == 1)
+                    set_kill(true);
+            }; break;
+        }
+        switch (r->get_mode()) {
+            case MANUAL: {
+                switch (ev.code) {
+                    case ABS_RX:
+                    {
+                        if (ev.value > 0) {
+                            //calculate the angle based on value
+                            r->turn_right(20);
+                        } else if (ev.value < 0) {
+                            r->turn_left(20);
+                        }
+                    };break;
+                    case ABS_RY:
+                    {
+                        if (ev.value < 0) {
+                            //calculate the angle based on value
+                            r->drive_forward(20);
+                        } else if (ev.value > 0) {
+                            r->drive_reverse(20);
+                        }
 
-            }
+                    };break;
+                }
+            }; break; //case manual
+            case AUTOMATIC:{
+                
+                
+                
+            };break;
+            case TANK: {
+                switch (ev.code) {
+                    case ABS_Z:
+                    {
+                        r->set_left_motor_speed(ev.value);
+                            r->drive_left_motor();
+                            r->drive_right_motor();
+
+                    };break;
+                    case ABS_RZ:
+                    {
+                        r->set_right_motor_speed(ev.value);
+                            r->drive_left_motor();
+                            r->drive_right_motor();
+
+                    };break;
+                }
+            };break;
+            case GPS:{
+                
+            };break;
+            case LIDAR_AUTOMATIC:{
+                
+            };break;
+            default:{}
+                break;
         }
         
         
         
         
         
-        
-    } while (rc == LIBEVDEV_READ_STATUS_SYNC || rc == LIBEVDEV_READ_STATUS_SUCCESS || rc == -EAGAIN);
+    } while ((rc == LIBEVDEV_READ_STATUS_SYNC || rc == LIBEVDEV_READ_STATUS_SUCCESS || rc == -EAGAIN) && kill == false);
 
     if (rc != LIBEVDEV_READ_STATUS_SUCCESS && rc != -EAGAIN)
         fprintf(stderr, "Failed to handle events: %s\n", strerror(-rc));

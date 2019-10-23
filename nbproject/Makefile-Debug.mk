@@ -35,11 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/8bd51d73/GpioHandler.o \
 	${OBJECTDIR}/EventHandler.o \
 	${OBJECTDIR}/Robot.o \
-	${OBJECTDIR}/i2cInterface.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/adafruitdcmotor.o \
+	${OBJECTDIR}/adafruitmotorhat.o \
+	${OBJECTDIR}/i2cdevice.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/pwm.o
 
 
 # C Compiler Flags
@@ -56,42 +58,50 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/local/lib -levdev /usr/local/lib/libgpiod.a -li2c
+LDLIBSOPTIONS=-L/usr/local/lib -levdev -lwiringPi -lpthread -lcrypt -lrt
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev: /usr/local/lib/libgpiod.a
-
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/8bd51d73/GpioHandler.o: ../gpio_test/GpioHandler.cpp
-	${MKDIR} -p ${OBJECTDIR}/_ext/8bd51d73
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/gpiod.h -include /usr/local/include/i2c.h -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/8bd51d73/GpioHandler.o ../gpio_test/GpioHandler.cpp
-
 ${OBJECTDIR}/EventHandler.o: EventHandler.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/gpiod.h -include /usr/local/include/i2c.h -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
 
 ${OBJECTDIR}/Robot.o: Robot.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/gpiod.h -include /usr/local/include/i2c.h -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
 
-${OBJECTDIR}/i2cInterface.o: i2cInterface.cpp
+${OBJECTDIR}/adafruitdcmotor.o: adafruitdcmotor.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/gpiod.h -include /usr/local/include/i2c.h -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/i2cInterface.o i2cInterface.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitdcmotor.o adafruitdcmotor.cpp
+
+${OBJECTDIR}/adafruitmotorhat.o: adafruitmotorhat.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitmotorhat.o adafruitmotorhat.cpp
+
+${OBJECTDIR}/i2cdevice.o: i2cdevice.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/i2cdevice.o i2cdevice.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/gpiod.h -include /usr/local/include/i2c.h -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/pwm.o: pwm.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pwm.o pwm.cpp
 
 # Subprojects
 .build-subprojects:
