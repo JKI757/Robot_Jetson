@@ -60,7 +60,7 @@ public:
         kOutDrive    = 0x04,
     };
 
-    PWM (int deviceAddress);
+    PWM (int deviceAddress, int bus);
 
     /** Sets the PWM frequency */
     void setFrequency (double frequency);

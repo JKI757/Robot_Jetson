@@ -30,9 +30,9 @@
 #include <cstring>
 #include <iostream>
 
-I2CDevice::I2CDevice (int deviceAddress)
-    : address (deviceAddress)
-    , handle (wiringPiI2CSetup (address))
+I2CDevice::I2CDevice (int deviceAddress, int bus)
+    : address (deviceAddress), bus(bus)
+    , handle (cpi2c_open (address, bus))
 {
     if (handle == -1)
     {
@@ -50,7 +50,7 @@ void I2CDevice::write8 (int deviceRegister, int data)
 {
     if (isValid())
     {
-        if (wiringPiI2CWriteReg8 (handle, deviceRegister, data) < 0)
+        if (cpi2c_writeRegister (handle, deviceRegister, data) < 0)
         {
             std::cerr << "Failed to write to device: ";
             std::cerr << std::strerror (errno) << std::endl;
@@ -62,7 +62,8 @@ int I2CDevice::read8 (int deviceRegister)
 {
     if (isValid())
     {
-        int data = wiringPiI2CReadReg8 (handle, deviceRegister);
+        uint8_t data;
+        cpi2c_readRegisters (handle, deviceRegister, 1, &data);
 
         if (data < 0)
         {

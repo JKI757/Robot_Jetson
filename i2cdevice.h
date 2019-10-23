@@ -26,7 +26,8 @@
 
 #pragma once
 
-#include "wiringPiI2C.h"
+//#include "wiringPiI2C.h"  //REPLACE with  cpi2c!!!!
+#include "CrossPlatformI2C.h"
 
 /** Represents an I2C device.
  *
@@ -37,7 +38,7 @@
 class I2CDevice
 {
 public:
-    I2CDevice (int deviceAddress);
+    I2CDevice (int deviceAddress, int bus);
 
     bool isValid();
 
@@ -46,5 +47,6 @@ public:
 
 private:
     const int address;
+    const int bus;
     const int handle;
 };

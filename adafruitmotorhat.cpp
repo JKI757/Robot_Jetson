@@ -26,8 +26,8 @@
 
 #include "adafruitmotorhat.h"
 
-AdafruitMotorHAT::AdafruitMotorHAT (int address, int freq)
-    : controller (address)
+AdafruitMotorHAT::AdafruitMotorHAT (int address, int freq, int bus)
+    : controller (address, bus)
     , frequency (freq)
 {
     // add the dc motors

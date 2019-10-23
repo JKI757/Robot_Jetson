@@ -30,8 +30,8 @@
 #include <thread>
 #include <chrono>
 
-PWM::PWM (int deviceAddress)
-    : device (deviceAddress)
+PWM::PWM (int deviceAddress, int bus)
+    : device (deviceAddress, bus)
 {
     if (device.isValid())
     {

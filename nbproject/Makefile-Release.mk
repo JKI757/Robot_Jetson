@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/EventHandler.o \
+	${OBJECTDIR}/I2CDevI2C.o \
 	${OBJECTDIR}/Robot.o \
 	${OBJECTDIR}/adafruitdcmotor.o \
 	${OBJECTDIR}/adafruitmotorhat.o \
@@ -72,6 +73,11 @@ ${OBJECTDIR}/EventHandler.o: EventHandler.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
+
+${OBJECTDIR}/I2CDevI2C.o: I2CDevI2C.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/I2CDevI2C.o I2CDevI2C.cpp
 
 ${OBJECTDIR}/Robot.o: Robot.cpp
 	${MKDIR} -p ${OBJECTDIR}

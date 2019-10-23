@@ -4,6 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CrossPlatformI2C.h</itemPath>
+      <itemPath>CrossPlatformI2C_Core.h</itemPath>
       <itemPath>EventHandler.h</itemPath>
       <itemPath>Robot.h</itemPath>
       <itemPath>adafruitdcmotor.h</itemPath>
@@ -20,6 +22,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>EventHandler.cpp</itemPath>
+      <itemPath>I2CDevI2C.cpp</itemPath>
       <itemPath>Robot.cpp</itemPath>
       <itemPath>adafruitdcmotor.cpp</itemPath>
       <itemPath>adafruitmotorhat.cpp</itemPath>
@@ -55,8 +58,6 @@
           </incDir>
           <incFile>
             <pElem>/usr/local/include/libevdev-1.0/libevdev/libevdev.h</pElem>
-            <pElem>/usr/local/include/wiringPi.h</pElem>
-            <pElem>/usr/local/include/wiringPiI2C.h</pElem>
           </incFile>
         </ccTool>
         <linkerTool>
@@ -65,16 +66,19 @@
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>evdev</linkerLibLibItem>
-            <linkerLibLibItem>wiringPi</linkerLibLibItem>
-            <linkerLibLibItem>pthread</linkerLibLibItem>
-            <linkerLibLibItem>crypt</linkerLibLibItem>
-            <linkerLibLibItem>rt</linkerLibLibItem>
+            <linkerLibLibItem>i2c</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="CrossPlatformI2C.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CrossPlatformI2C_Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="EventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="I2CDevI2C.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -121,9 +125,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="CrossPlatformI2C.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CrossPlatformI2C_Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="EventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="I2CDevI2C.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
