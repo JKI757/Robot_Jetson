@@ -208,31 +208,36 @@ int EventHandler::event_loop()
                 if (ev.value == 1)
                     r->toggle_mode();
             };break;
-            case BTN_START:
-            {
-                if (ev.value == 1)
-                    set_kill(true);
-            }; break;
+//            case BTN_START: {
+//                if (ev.value == 1)
+//                    set_kill(true);
+//            }; break;
+            case BTN_SELECT:{ //"Back" Button -- used as a reset, kills everything and starts over
+                r->init();
+            } break;
+            case BTN_EAST:{ //"B" Button -- used to shift from forward to reverse
+                r->toggle_driving_direction();
+            };break;
         }
         switch (r->get_mode()) {
             case MANUAL: {
                 switch (ev.code) {
                     case ABS_RX:
                     {
-                        if (ev.value > 0) {
+                        if (ev.value < 2) {
                             //calculate the angle based on value
-                            r->turn_right(20);
-                        } else if (ev.value < 0) {
-                            r->turn_left(20);
+                            r->turn_right(abs(ev.value));
+                        } else if (ev.value > 2) {
+                            r->turn_left(abs(ev.value));
                         }
                     };break;
                     case ABS_RY:
                     {
-                        if (ev.value < 0) {
+                        if (ev.value < 2) {
                             //calculate the angle based on value
-                            r->drive_forward(20);
-                        } else if (ev.value > 0) {
-                            r->drive_reverse(20);
+                            r->drive_forward(abs(ev.value));
+                        } else if (ev.value > 2) {
+                            r->drive_reverse(abs(ev.value));
                         }
 
                     };break;
@@ -248,15 +253,15 @@ int EventHandler::event_loop()
                     case ABS_Z:
                     {
                         r->set_left_motor_speed(ev.value);
-                            r->drive_left_motor();
-                            r->drive_right_motor();
+//                            r->drive_left_motor();
+//                            r->drive_right_motor();
 
                     };break;
                     case ABS_RZ:
                     {
                         r->set_right_motor_speed(ev.value);
-                            r->drive_left_motor();
-                            r->drive_right_motor();
+//                            r->drive_left_motor();
+//                            r->drive_right_motor();
 
                     };break;
                 }
@@ -271,7 +276,7 @@ int EventHandler::event_loop()
                 break;
         }
         
-        
+        r->drive();
         
         
         

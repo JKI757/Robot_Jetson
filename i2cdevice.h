@@ -26,7 +26,6 @@
 
 #pragma once
 
-//#include "wiringPiI2C.h"  //REPLACE with  cpi2c!!!!
 #include "CrossPlatformI2C.h"
 
 /** Represents an I2C device.

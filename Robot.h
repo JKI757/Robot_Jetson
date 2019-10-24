@@ -33,12 +33,13 @@ public:
     Robot(const Robot& orig);
     virtual ~Robot();
     
+    int init();
     int rad_to_deg(float rad);
     float deg_to_rad(int deg);
     
-    void drive(int speed, int turn_angle);
-    int turn_right(int turn_angle);
-    int turn_left(int turn_angle);
+    void drive();
+    int turn_right(int speed);
+    int turn_left(int speed);
     int drive_forward(int speed);
     int drive_reverse(int speed);
     int drive_left_motor();
@@ -55,6 +56,8 @@ public:
 
     mode toggle_mode();
     mode increment_mode(mode current_mode);
+    AdafruitDCMotor::Command set_driving_direction(AdafruitDCMotor::Command m);
+    AdafruitDCMotor::Command toggle_driving_direction();
 
 private:
     
@@ -69,6 +72,7 @@ private:
     int m_left_motor_speed;
     int m_right_motor_speed;
     bool m_driving;
+    AdafruitDCMotor::Command m_driving_direction;
     bool m_lidar_on;
    
     bool m_left_motor_on;
