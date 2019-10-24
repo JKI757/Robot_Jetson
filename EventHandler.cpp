@@ -207,6 +207,7 @@ int EventHandler::event_loop()
             case BTN_WEST:{
                 if (ev.value == 1)
                     r->toggle_mode();
+                r->set_driving_direction(AdafruitDCMotor::kForward);
             };break;
 //            case BTN_START: {
 //                if (ev.value == 1)
@@ -230,6 +231,7 @@ int EventHandler::event_loop()
                         } else if (ev.value > 2) {
                             r->turn_left(abs(ev.value));
                         }
+                        r->drive();
                     };break;
                     case ABS_RY:
                     {
@@ -239,7 +241,7 @@ int EventHandler::event_loop()
                         } else if (ev.value > 2) {
                             r->drive_reverse(abs(ev.value));
                         }
-
+                        r->drive();
                     };break;
                 }
             }; break; //case manual
@@ -250,18 +252,19 @@ int EventHandler::event_loop()
             };break;
             case TANK: {
                 switch (ev.code) {
+                    
                     case ABS_Z:
                     {
                         r->set_left_motor_speed(ev.value);
-//                            r->drive_left_motor();
-//                            r->drive_right_motor();
+                        r->drive_left_motor();
+                        r->drive_right_motor();
 
                     };break;
                     case ABS_RZ:
                     {
                         r->set_right_motor_speed(ev.value);
-//                            r->drive_left_motor();
-//                            r->drive_right_motor();
+                        r->drive_left_motor();
+                        r->drive_right_motor();
 
                     };break;
                 }
@@ -276,7 +279,6 @@ int EventHandler::event_loop()
                 break;
         }
         
-        r->drive();
         
         
         
