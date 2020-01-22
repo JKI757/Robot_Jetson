@@ -227,9 +227,12 @@ int EventHandler::event_loop()
                     {
                         if (ev.value < -150) {
                             //calculate the angle based on value
-                            r->turn_right(abs(ev.value));
-                        } else if (ev.value > 150) {
                             r->turn_left(abs(ev.value));
+                        } else if (ev.value > 150) {
+                            r->turn_right(abs(ev.value));
+                        }
+                        else{
+                            r->turn_zero();
                         }
                     };break;
                     case ABS_RY:
@@ -240,6 +243,9 @@ int EventHandler::event_loop()
                         } else if (ev.value > 150) {
                             r->drive_reverse(abs(ev.value));
                         }
+                        else{
+                            r->drive_brake();
+                        }
                     };break;
                 }
             }; break; //case manual
@@ -247,24 +253,6 @@ int EventHandler::event_loop()
                 
                 
                 
-            };break;
-            case TANK: {
-                switch (ev.code) {
-              
-                    
-                    case ABS_Z:
-                    {
-                        r->set_left_motor_speed(ev.value);
-                    };break;
-                    case ABS_RZ:
-                    {
-                        r->set_right_motor_speed(ev.value);
-                    };break;
-//                    r->drive_left_motor();
-//                    r->drive_right_motor();
-                }
-                r->set_driving_direction(AdafruitDCMotor::kForward);
-
             };break;
             case GPS:{
                 

@@ -34,19 +34,21 @@ public:
     virtual ~Robot();
     
     int init();
+    int deinit();
+
     int rad_to_deg(float rad);
     float deg_to_rad(int deg);
     
     void drive();
     int turn_right(int speed);
     int turn_left(int speed);
+    int turn_zero();
     int drive_forward(int speed);
     int drive_reverse(int speed);
-    int drive_left_motor();
-    int drive_right_motor();
-    
-    int set_left_motor_speed(int speed);
-    int set_right_motor_speed(int speed);
+    int drive_brake();
+
+    int set_drive_motor_speed(int speed);
+    int set_steering_motor_speed(int speed);
     int change_speed(int speed);
     int turn(int angle);
     
@@ -62,22 +64,19 @@ public:
 private:
     
     std::shared_ptr<AdafruitMotorHAT> mh;
-    std::shared_ptr<AdafruitDCMotor> left_motor;
-    std::shared_ptr<AdafruitDCMotor> right_motor;
+    std::shared_ptr<AdafruitDCMotor> steering_motor;
+    std::shared_ptr<AdafruitDCMotor> drive_motor;
     
     int m_turn_angle;
     int m_heading;
     int m_speed;
     int m_max_speed;
-    int m_left_motor_speed;
-    int m_right_motor_speed;
+    int m_drive_motor_speed;
+    int m_steering_motor_speed;
     bool m_driving;
     AdafruitDCMotor::Command m_driving_direction;
     bool m_lidar_on;
    
-    bool m_left_motor_on;
-    bool m_right_motor_on;
-    
     
     mode m_current_mode;
     
