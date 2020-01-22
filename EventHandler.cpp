@@ -225,23 +225,21 @@ int EventHandler::event_loop()
                 switch (ev.code) {
                     case ABS_RX:
                     {
-                        if (ev.value < 2) {
+                        if (ev.value < -150) {
                             //calculate the angle based on value
                             r->turn_right(abs(ev.value));
-                        } else if (ev.value > 2) {
+                        } else if (ev.value > 150) {
                             r->turn_left(abs(ev.value));
                         }
-                        r->drive();
                     };break;
                     case ABS_RY:
                     {
-                        if (ev.value < 2) {
+                        if (ev.value < -150) {
                             //calculate the angle based on value
                             r->drive_forward(abs(ev.value));
-                        } else if (ev.value > 2) {
+                        } else if (ev.value > 150) {
                             r->drive_reverse(abs(ev.value));
                         }
-                        r->drive();
                     };break;
                 }
             }; break; //case manual
@@ -252,22 +250,21 @@ int EventHandler::event_loop()
             };break;
             case TANK: {
                 switch (ev.code) {
+              
                     
                     case ABS_Z:
                     {
                         r->set_left_motor_speed(ev.value);
-                        r->drive_left_motor();
-                        r->drive_right_motor();
-
                     };break;
                     case ABS_RZ:
                     {
                         r->set_right_motor_speed(ev.value);
-                        r->drive_left_motor();
-                        r->drive_right_motor();
-
                     };break;
+//                    r->drive_left_motor();
+//                    r->drive_right_motor();
                 }
+                r->set_driving_direction(AdafruitDCMotor::kForward);
+
             };break;
             case GPS:{
                 
@@ -278,7 +275,8 @@ int EventHandler::event_loop()
             default:{}
                 break;
         }
-        
+        r->drive();
+
         
         
         

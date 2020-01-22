@@ -37,8 +37,8 @@ int Robot::init(){
     m_right_motor_on = false;
     m_current_mode = MANUAL;
     mh = std::make_shared<AdafruitMotorHAT>();
-    left_motor = mh->getMotor(4);
-    right_motor = mh->getMotor(1);
+    left_motor = mh->getMotor(1);
+    right_motor = mh->getMotor(4);
     m_driving_direction = AdafruitDCMotor::kBrake;
     return 0;   
 }
@@ -71,11 +71,12 @@ void Robot::drive() {
 int Robot::turn_right(int speed) {
     int new_angle = 0;
     std::cout << "turning right: "  << std::endl;
-    left_motor->setSpeed(speed);
-    right_motor->setSpeed(speed);
+    set_right_motor_speed(speed);
+    set_left_motor_speed(speed);
 
-    left_motor->run(AdafruitDCMotor::kForward);
-    right_motor->run(AdafruitDCMotor::kBackward);
+    left_motor->run(AdafruitDCMotor::kForward); 
+    //TODO: toggle this instead?  What about turning while backing?
+//    right_motor->run(AdafruitDCMotor::kBackward);
 
     return new_angle;
 }
@@ -83,10 +84,10 @@ int Robot::turn_right(int speed) {
 int Robot::turn_left(int speed) {
     int new_angle = 0;
     std::cout << "turning left : " << std::endl;
-    left_motor->setSpeed(speed);
-    right_motor->setSpeed(speed);
+    set_right_motor_speed(speed);
+    set_left_motor_speed(speed);
     
-    left_motor->run(AdafruitDCMotor::kBackward);
+//    left_motor->run(AdafruitDCMotor::kBackward);
     right_motor->run(AdafruitDCMotor::kForward);
 
     return new_angle;
@@ -96,11 +97,12 @@ int Robot::turn_left(int speed) {
 int Robot::drive_forward(int speed) {
     int new_angle = 0;
     std::cout << "driving forward speed: " << speed << std::endl;
-    left_motor->setSpeed(speed);
-    right_motor->setSpeed(speed);
+    set_right_motor_speed(speed);
+    set_left_motor_speed(speed);
+    set_driving_direction(AdafruitDCMotor::kForward);
     
-    left_motor->run(AdafruitDCMotor::kForward);
-    right_motor->run(AdafruitDCMotor::kForward);
+    drive_left_motor();
+    drive_right_motor();
     
     return new_angle;
 
@@ -109,11 +111,12 @@ int Robot::drive_forward(int speed) {
 int Robot::drive_reverse(int speed) {
     int new_angle = 0;
     std::cout << "driving reverse speed: " << speed << std::endl;
-    left_motor->setSpeed(speed);
-    right_motor->setSpeed(speed);
+    set_right_motor_speed(speed);
+    set_left_motor_speed(speed);
+    set_driving_direction(AdafruitDCMotor::kBackward);
     
-    left_motor->run(AdafruitDCMotor::kBackward);
-    right_motor->run(AdafruitDCMotor::kBackward);
+    drive_left_motor();
+    drive_right_motor();
 
     return new_angle;
 
@@ -122,7 +125,7 @@ int Robot::drive_reverse(int speed) {
 int Robot::drive_left_motor() {
     //m_left_motor_speed = speed % m_max_speed;
     std::cout<<  "Driving left motor: " << m_left_motor_speed << std::endl;
-    left_motor->setSpeed(m_left_motor_speed*2);
+    left_motor->setSpeed(m_left_motor_speed);
     left_motor->run(m_driving_direction);
     return m_left_motor_speed;
 }
@@ -130,7 +133,7 @@ int Robot::drive_left_motor() {
 int Robot::drive_right_motor() {
    // m_right_motor_speed = speed % m_max_speed;
     std::cout<<  "Driving right motor: " << m_right_motor_speed << std::endl;
-    right_motor->setSpeed(m_right_motor_speed*2);
+    right_motor->setSpeed(m_right_motor_speed);
     right_motor->run(m_driving_direction);
 
     return m_right_motor_speed;
