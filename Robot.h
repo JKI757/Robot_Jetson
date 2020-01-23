@@ -51,14 +51,16 @@ public:
     int set_steering_motor_speed(int speed);
     int change_speed(int speed);
     int turn(int angle);
-    
+    const AdafruitDCMotor::Command get_driving_direction(){return m_driving_direction;};
+    void set_driving_direction(AdafruitDCMotor::Command direction){m_driving_direction = direction;};
+    const bool get_driving(){return m_driving;};
+    void set_driving(bool d){m_driving = d;};
     mode get_mode();
     std::string get_text_mode();
     mode set_mode(mode m);
 
     mode toggle_mode();
     mode increment_mode(mode current_mode);
-    AdafruitDCMotor::Command set_driving_direction(AdafruitDCMotor::Command m);
     AdafruitDCMotor::Command toggle_driving_direction();
 
 private:
@@ -83,4 +85,5 @@ private:
 };
 
 #endif /* ROBOT_H */
+
 

@@ -40,13 +40,16 @@ int Robot::init(){
     drive_motor = mh->getMotor(4);
     steering_motor = mh->getMotor(2);
     m_driving_direction = AdafruitDCMotor::kBrake;
+    steering_motor->run(AdafruitDCMotor::kBrake);
+    drive_motor->run(AdafruitDCMotor::kBrake);
+
     return 0;   
 }
 int Robot::deinit(){
     m_turn_angle=0;
     m_heading = 0;
     m_speed = 0;
-    m_max_speed=255;
+    m_max_speed=0;
     m_drive_motor_speed = 0;
     m_steering_motor_speed = 0;
     m_driving = false;
@@ -79,9 +82,10 @@ int angle_trunc(int angle){
 }
 
 void Robot::drive() {
+    m_driving = true;
     drive_motor->setSpeed(m_drive_motor_speed);
-
     drive_motor->run(m_driving_direction);
+    std::cout << "Driving " << m_driving_direction << "speed: " << m_drive_motor_speed<<std::endl;
 }
 
 int Robot::turn_right(int speed) {
@@ -131,9 +135,9 @@ int Robot::drive_brake(){
 }
 
 int Robot::change_speed(int speed){
-    m_speed += speed;
-    m_speed = m_speed % m_max_speed;
-    return m_speed;
+//    m_speed += speed;
+    m_drive_motor_speed = speed % m_max_speed;
+    return m_drive_motor_speed;
 }
 
 int Robot::set_drive_motor_speed(int speed){
@@ -189,10 +193,6 @@ mode Robot::increment_mode(mode current_mode){
     return (m_current_mode = (mode)(++i%NUMBER_OF_MODES));
 }
 
-AdafruitDCMotor::Command Robot::set_driving_direction(AdafruitDCMotor::Command m){
-    m_driving_direction = m;
-    return m_driving_direction;
-}
 
 AdafruitDCMotor::Command Robot::toggle_driving_direction() {
     if (m_driving_direction == AdafruitDCMotor::kBackward)
@@ -201,3 +201,4 @@ AdafruitDCMotor::Command Robot::toggle_driving_direction() {
         m_driving_direction = AdafruitDCMotor::kBackward;
     return m_driving_direction;
 }
+

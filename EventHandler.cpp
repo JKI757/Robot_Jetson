@@ -205,9 +205,10 @@ int EventHandler::event_loop()
         std::cout << "current robot mode: " <<  r->get_text_mode() << std::endl;
         switch (ev.code){
             case BTN_WEST:{
-                if (ev.value == 1)
+                if (ev.value == 1){
                     r->toggle_mode();
-                r->set_driving_direction(AdafruitDCMotor::kForward);
+                }
+                r->set_driving_direction(AdafruitDCMotor::kBrake);
             };break;
 //            case BTN_START: {
 //                if (ev.value == 1)
@@ -239,15 +240,33 @@ int EventHandler::event_loop()
                     {
                         if (ev.value < -150) {
                             //calculate the angle based on value
-                            r->drive_forward(abs(ev.value));
+//                            r->drive_forward(abs(ev.value));
+                            r->set_driving_direction(AdafruitDCMotor::kForward);
+                            if (r->get_driving()){
+                                r->change_speed(ev.value);
+                            }
+                            else{
+                                r->change_speed(abs(ev.value));
+                                r->drive();
+                            }
+                            
                         } else if (ev.value > 150) {
-                            r->drive_reverse(abs(ev.value));
-                        }
-                        else{
+                            r->set_driving_direction(AdafruitDCMotor::kBackward);
+                            if (r->get_driving()){
+                                r->change_speed(ev.value);
+                            }
+                            else{
+                                r->change_speed(abs(ev.value));
+                                r->drive();
+                            }
+//                            r->drive_reverse(abs(ev.value));
+                        } else if (ev.value >-150 && ev.value < 150){
                             r->drive_brake();
+                            r->set_driving(false);
                         }
                     };break;
                 }
+                //run here??
             }; break; //case manual
             case AUTOMATIC:{
                 
@@ -263,7 +282,6 @@ int EventHandler::event_loop()
             default:{}
                 break;
         }
-        r->drive();
 
         
         
