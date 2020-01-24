@@ -58,6 +58,9 @@
 
 #define NUMBER_OF_MODES 5
 
+#define DEBUG
+//#define DEBUG_DISCONNECT
+
 
 #ifdef __cplusplus
 extern "C" {

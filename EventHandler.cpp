@@ -65,7 +65,7 @@ void EventHandler::init(std::string device_name, std::shared_ptr<Robot>r_in){
     }
     
     r = r_in;
-    
+#ifdef DEBUG
     printf("Input device ID: bus %#x vendor %#x product %#x\n",
                     libevdev_get_id_bustype(dev),
                     libevdev_get_id_vendor(dev),
@@ -75,11 +75,12 @@ void EventHandler::init(std::string device_name, std::shared_ptr<Robot>r_in){
     printf("Phys location: %s\n", libevdev_get_phys(dev));
     printf("Uniq identifier: %s\n", libevdev_get_uniq(dev));
     print_bits(dev);
+#endif
     //print_props(dev);
 
 }
 
-
+#ifdef DEBUG
 void EventHandler::print_abs_bits(struct libevdev *dev, int axis)
 {
 	const struct input_absinfo *abs;
@@ -187,7 +188,7 @@ int EventHandler::print_sync_event(struct input_event *ev)
     print_event(ev);
     return 0;
 }
-
+#endif
 int EventHandler::event_loop()
 {
     do {
@@ -196,15 +197,26 @@ int EventHandler::event_loop()
         if (rc == LIBEVDEV_READ_STATUS_SYNC) {
             //printf("::::::::::::::::::::: dropped ::::::::::::::::::::::\n");
             while (rc == LIBEVDEV_READ_STATUS_SYNC) {
+#ifdef DEBUG
                     print_sync_event(&ev);
+#endif
                     rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_SYNC, &ev);
             }
            // printf("::::::::::::::::::::: re-synced ::::::::::::::::::::::\n");
-        } else if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
+        } 
+#ifdef DEBUG 
+        else if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
+
             print_event(&ev);
         std::cout << "current robot mode: " <<  r->get_text_mode() << std::endl;
+#endif
         switch (ev.code){
-            case BTN_WEST:{
+            case BTN_NORTH:{ //X Button
+                if (ev.value == 1){
+                    r->toggle_disconnected();
+                }
+            };break;
+            case BTN_WEST:{ //Y Button
                 if (ev.value == 1){
                     r->toggle_mode();
                 }

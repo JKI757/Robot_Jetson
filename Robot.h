@@ -53,6 +53,12 @@ public:
     int turn(int angle);
     const AdafruitDCMotor::Command get_driving_direction(){return m_driving_direction;};
     void set_driving_direction(AdafruitDCMotor::Command direction){m_driving_direction = direction;};
+    void toggle_disconnected(){
+        if (m_disconnected) m_disconnected=false; else m_disconnected=true; 
+#ifdef DEBUG 
+    std::cout << "Disconnected is: " << m_disconnected << std::endl; 
+#endif 
+    };
     const bool get_driving(){return m_driving;};
     void set_driving(bool d){m_driving = d;};
     mode get_mode();
@@ -81,6 +87,7 @@ private:
    
     
     mode m_current_mode;
+    bool m_disconnected;
     
 };
 

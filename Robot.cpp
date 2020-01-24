@@ -40,9 +40,9 @@ int Robot::init(){
     drive_motor = mh->getMotor(4);
     steering_motor = mh->getMotor(2);
     m_driving_direction = AdafruitDCMotor::kBrake;
+    m_disconnected = true;
     steering_motor->run(AdafruitDCMotor::kBrake);
     drive_motor->run(AdafruitDCMotor::kBrake);
-
     return 0;   
 }
 int Robot::deinit(){
@@ -58,9 +58,11 @@ int Robot::deinit(){
     m_driving_direction = AdafruitDCMotor::kBrake;
     steering_motor->setSpeed(0);
     drive_motor->setSpeed(0);
-    steering_motor->run(AdafruitDCMotor::kBrake);
-    drive_motor->run(AdafruitDCMotor::kBrake);
-
+    
+    if (!m_disconnected){
+        steering_motor->run(AdafruitDCMotor::kBrake);
+        drive_motor->run(AdafruitDCMotor::kBrake);
+    }
     return 0;   
 }
 
@@ -83,55 +85,87 @@ int angle_trunc(int angle){
 
 void Robot::drive() {
     m_driving = true;
-    drive_motor->setSpeed(m_drive_motor_speed);
-    drive_motor->run(m_driving_direction);
+    if (!m_disconnected){
+        drive_motor->setSpeed(m_drive_motor_speed);
+        drive_motor->run(m_driving_direction);
+    }
+#ifdef DEBUG
     std::cout << "Driving " << m_driving_direction << "speed: " << m_drive_motor_speed<<std::endl;
+#endif
 }
 
 int Robot::turn_right(int speed) {
     
     int new_angle = 0;
-    std::cout << "turning right: "  << std::endl;
-    steering_motor->setSpeed(speed/30);
-    steering_motor->run(AdafruitDCMotor::kForward);
+
+    if (!m_disconnected){
+        steering_motor->setSpeed(speed/30);
+        steering_motor->run(AdafruitDCMotor::kForward);
+    }
+#ifdef DEBUG
+    std::cout << "turning right" << std::endl;
+#endif
     return new_angle;
 }
 
 int Robot::turn_left(int speed) {
     int new_angle = 0;
+#ifdef DEBUG
     std::cout << "turning left : " << std::endl;
-    steering_motor->setSpeed(speed/30);
-    steering_motor->run(AdafruitDCMotor::kBackward);
-    return new_angle;
+#endif
+
+    if (!m_disconnected){
+        steering_motor->setSpeed(speed/30);
+        steering_motor->run(AdafruitDCMotor::kBackward);
+    }    return new_angle;
 }
 
 int Robot::turn_zero(){
+#ifdef DEBUG
     std::cout << "turning left : " << std::endl;
-    steering_motor->setSpeed(0);
-    steering_motor->run(AdafruitDCMotor::kBrake);
+#endif
+
+    if (!m_disconnected){
+        steering_motor->setSpeed(0);
+        steering_motor->run(AdafruitDCMotor::kBrake);
+    }
 }
 int Robot::drive_forward(int speed) {
+#ifdef DEBUG
     std::cout << "driving forward speed: " << speed << std::endl;
+#endif
     set_driving_direction(AdafruitDCMotor::kForward);
-    drive_motor->setSpeed(speed%m_max_speed);
-    drive_motor->run(AdafruitDCMotor::kForward);
+
+    if (!m_disconnected){
+        drive_motor->setSpeed(speed%m_max_speed);
+        drive_motor->run(AdafruitDCMotor::kForward);
+    }
     return m_drive_motor_speed;
 
 }
 
 int Robot::drive_reverse(int speed) {
+#ifdef DEBUG
     std::cout << "driving reverse speed: " << speed << std::endl;
+#endif
     set_driving_direction(AdafruitDCMotor::kBackward);
-    drive_motor->setSpeed(speed%m_max_speed);
-    drive_motor->run(AdafruitDCMotor::kBackward);
 
-    return m_drive_motor_speed;
+    if (!m_disconnected){
+        drive_motor->setSpeed(speed%m_max_speed);
+        drive_motor->run(AdafruitDCMotor::kBackward);
+    }
+return m_drive_motor_speed;
 
 }
 int Robot::drive_brake(){
+#ifdef DEBUG
+    std::cout << "braking" << std::endl;
+#endif
     drive_motor->setSpeed(0);
-    drive_motor->run(AdafruitDCMotor::kBrake);
-    
+
+    if (!m_disconnected){
+        drive_motor->run(AdafruitDCMotor::kBrake);
+    }
 }
 
 int Robot::change_speed(int speed){
