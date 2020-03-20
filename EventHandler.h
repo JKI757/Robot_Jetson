@@ -31,7 +31,7 @@
 #include "Robot.h"
 #include "definitions.h"
 
-
+#define DEBUG
 class EventHandler {
 public:
     EventHandler();

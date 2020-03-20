@@ -14,7 +14,7 @@
 #include <cstdlib>
 #include "EventHandler.h"
 #include <memory>
-
+#include "lidar_driver.h"
 /*
  * 
  */
@@ -24,6 +24,8 @@ int main(int argc, char** argv) {
         
     std::shared_ptr<Robot> r = std::make_shared<Robot>();
     
+    std::shared_ptr<lidar_driver> lidar = std::make_shared<lidar_driver>();
+    lidar->init();
     evh->init("/dev/input/event2", r);
     
     evh->event_loop();

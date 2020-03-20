@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /* 
  * File:   EventHandler.cpp
@@ -12,6 +8,7 @@
  */
 
 #include "EventHandler.h"
+#define DEBUG
 
 EventHandler::EventHandler() {
     kill = false;
@@ -189,6 +186,7 @@ int EventHandler::print_sync_event(struct input_event *ev)
     return 0;
 }
 #endif
+
 int EventHandler::event_loop()
 {
     do {
@@ -220,7 +218,7 @@ int EventHandler::event_loop()
                 if (ev.value == 1){
                     r->toggle_mode();
                 }
-                r->set_driving_direction(AdafruitDCMotor::kBrake);
+                r->drive_brake();
             };break;
 //            case BTN_START: {
 //                if (ev.value == 1)
@@ -253,7 +251,7 @@ int EventHandler::event_loop()
                         if (ev.value < -150) {
                             //calculate the angle based on value
 //                            r->drive_forward(abs(ev.value));
-                            r->set_driving_direction(AdafruitDCMotor::kForward);
+                            r->set_driving_direction(FORWARD);
                             if (r->get_driving()){
                                 r->change_speed(ev.value);
                             }
@@ -263,7 +261,7 @@ int EventHandler::event_loop()
                             }
                             
                         } else if (ev.value > 150) {
-                            r->set_driving_direction(AdafruitDCMotor::kBackward);
+                            r->set_driving_direction(BACKWARD);
                             if (r->get_driving()){
                                 r->change_speed(ev.value);
                             }

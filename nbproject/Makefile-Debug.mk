@@ -36,13 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/EventHandler.o \
-	${OBJECTDIR}/I2CDevI2C.o \
+	${OBJECTDIR}/Motor.o \
 	${OBJECTDIR}/Robot.o \
-	${OBJECTDIR}/adafruitdcmotor.o \
-	${OBJECTDIR}/adafruitmotorhat.o \
-	${OBJECTDIR}/i2cdevice.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/pwm.o
+	${OBJECTDIR}/lidar_driver.o \
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -59,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/local/lib -levdev -li2c
+LDLIBSOPTIONS=-L/usr/local/lib -L/usr/include/hal -levdev -li2c -lrplidar_sdk -lpthread
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -72,42 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l: ${OBJECTFILES}
 ${OBJECTDIR}/EventHandler.o: EventHandler.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/rplidar.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
 
-${OBJECTDIR}/I2CDevI2C.o: I2CDevI2C.cpp
+${OBJECTDIR}/Motor.o: Motor.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/I2CDevI2C.o I2CDevI2C.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/rplidar.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Motor.o Motor.cpp
 
 ${OBJECTDIR}/Robot.o: Robot.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/rplidar.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
 
-${OBJECTDIR}/adafruitdcmotor.o: adafruitdcmotor.cpp
+${OBJECTDIR}/lidar_driver.o: lidar_driver.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitdcmotor.o adafruitdcmotor.cpp
-
-${OBJECTDIR}/adafruitmotorhat.o: adafruitmotorhat.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitmotorhat.o adafruitmotorhat.cpp
-
-${OBJECTDIR}/i2cdevice.o: i2cdevice.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/i2cdevice.o i2cdevice.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/rplidar.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lidar_driver.o lidar_driver.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/pwm.o: pwm.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pwm.o pwm.cpp
+	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/rplidar.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
