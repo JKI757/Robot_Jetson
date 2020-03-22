@@ -12,6 +12,7 @@
 #include <memory>
 #include "Motor.h"
 #include "definitions.h"
+#define DEBUG
 
 enum mode {MANUAL, AUTOMATIC, TANK, GPS, LIDAR_AUTOMATIC};
 

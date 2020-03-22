@@ -13,10 +13,16 @@
 
 #include "lidar_driver.h"
 
-
 lidar_driver::lidar_driver(const lidar_driver& orig) {
 }
 
 lidar_driver::~lidar_driver() {
+
+    driver->stop();
+    driver->stopMotor();
+
+    rp::standalone::rplidar::RPlidarDriver::DisposeDriver(driver);
+
+    //delete(driver);//Don't know if this is required
 }
 

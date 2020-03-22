@@ -7,6 +7,7 @@
  */
 
 #include "Robot.h"
+#define DEBUG
 
 Robot::Robot() {
     init();
@@ -33,6 +34,7 @@ int Robot::init() {
     m_driving_direction = FORWARD;
     m_command = BRAKE;
     m_disconnected = true;
+    motor = std::make_shared<Motor> ();
     motor->run(m_driving_direction);
     return 0;
 }
@@ -86,10 +88,10 @@ void Robot::drive() {
 int Robot::turn_right(int angle) {
 
     int new_angle = 0;
-//
-//    if (!m_disconnected) {
-//        steering_motor->run(FORWARD);
-//    }
+    //
+    //    if (!m_disconnected) {
+    //        steering_motor->run(FORWARD);
+    //    }
 #ifdef DEBUG
     std::cout << "turning right" << std::endl;
 #endif
@@ -102,9 +104,9 @@ int Robot::turn_left(int angle) {
     std::cout << "turning left : " << std::endl;
 #endif
 
-//    if (!m_disconnected) {
-//        steering_motor->run(AdafruitDCMotor::kBackward);
-//    }
+    //    if (!m_disconnected) {
+    //        steering_motor->run(AdafruitDCMotor::kBackward);
+    //    }
     return new_angle;
 }
 
@@ -114,7 +116,7 @@ int Robot::turn_zero() {
 #endif
 
     if (!m_disconnected) {
-        motor->turnAbsolute(0);       
+        motor->turnAbsolute(0);
     }
 }
 
@@ -224,10 +226,21 @@ mode Robot::increment_mode(mode current_mode) {
 }
 
 driving_direction Robot::toggle_driving_direction() {
-    if (m_driving_direction == BACKWARD)
+#ifdef DEBUG
+    std::cout << "Change Driving Direction ";
+#endif
+    if (m_driving_direction == BACKWARD) {
         m_driving_direction = FORWARD;
-    else
+#ifdef DEBUG
+        std::cout << "New Direction is Forward" << std::endl;
+#endif
+    } else {
         m_driving_direction = BACKWARD;
+#ifdef DEBUG
+        std::cout << "New Direction is Backward" << std::endl;
+
+#endif
+    }
     return m_driving_direction;
 }
 
