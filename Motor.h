@@ -8,6 +8,7 @@
 
 #ifndef MOTOR_H
 #define MOTOR_H
+#define DEBUG
 
 #include <stdio.h>
 #include <string.h>
@@ -17,6 +18,9 @@
 #include <unistd.h> 
 #include <cmath>
 #include <string>
+#include <iostream>
+
+#include "definitions.h"
 
 enum command { TURN, DRIVE, TURNLEFT, TURNRIGHT, DIRECTION, BRAKE };\
 
@@ -37,11 +41,16 @@ public:
     int init(std::string port);
 
     int setDriveSpeed(int speed) {
-        current_drive_speed = speed;
+        current_drive_speed = map(speed, MIN_THROTTLE, MAX_THROTTLE, MIN_SPEED_LIMIT, MAX_SPEED_LIMIT) ;
+#ifdef DEBUG
+        std::cout << "setting speed to: " << current_drive_speed << std::endl;
+#endif
     };
     int run(driving_direction d);
     int stop();
     int turnAbsolute(unsigned char angle);
+    int turnRight(int angle);
+    int turnLeft(int angle);
 
     
 private:
@@ -52,13 +61,13 @@ private:
     int current_drive_speed=0;
     
     
-    const unsigned char TURNCOMMAND[2]        = {0x00, 0x0A};
-    const unsigned char BRAKECOMMAND[2]       = {0x00, 0x0B};
-    const unsigned char DRIVECOMMAND[2]       = {0x00, 0x0C};
-    const unsigned char TURNLEFTCOMMAND[2]    = {0x00, 0x0D};
-    const unsigned char TURNRIGHTCOMMAND[2]   = {0x00, 0x0E};
-    const unsigned char DIRECTIONCOMMAND[2]   = {0x00, 0x0F};
-    int NULLDATA                              = 0x00;
+    const unsigned char TURNCOMMAND        =  0x0A;
+    const unsigned char BRAKECOMMAND       =  0x0B;
+    const unsigned char DRIVECOMMAND       =  0x0C;
+    const unsigned char TURNLEFTCOMMAND    =  0x0D;
+    const unsigned char TURNRIGHTCOMMAND   =  0x0E;
+    const unsigned char DIRECTIONCOMMAND   =  0x0F;
+    int NULLDATA                           = 0x00;
     
     
     int map(int val, int a, int b, int c, int d) {

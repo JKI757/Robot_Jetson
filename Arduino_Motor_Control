@@ -79,7 +79,7 @@ void serialEvent(){
     #endif
     if (!commandReceived){
       switch (incomingByte){
-        case 0xA:{
+        case 0x0A:{
           commandType=TURN;
           commandReceived=true;
           Serial.flush();
@@ -87,7 +87,7 @@ void serialEvent(){
             dprintln("Turn command received");
           #endif
         };break;
-        case 0xB:{
+        case 0x0B:{
           commandType=BRAKE;
           commandReceived=true;
           Serial.flush();
@@ -95,7 +95,7 @@ void serialEvent(){
             dprintln("Brake command received");
           #endif
         };break;
-        case 0xC:{
+        case 0x0C:{
           commandType=DRIVE;
           commandReceived=true;
           Serial.flush();
@@ -103,7 +103,7 @@ void serialEvent(){
             dprintln("Drive command received");
           #endif          
         };break;
-        case 0xD:{
+        case 0x0D:{
           commandType=TURNLEFT;
           commandReceived=true;
           Serial.flush();
@@ -111,7 +111,7 @@ void serialEvent(){
             dprintln("Turn Left Command Received");
           #endif          
         };break;
-        case 0xE:{
+        case 0x0E:{
           commandType=TURNRIGHT;
           commandReceived=true;
           Serial.flush();

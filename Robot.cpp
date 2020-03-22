@@ -100,6 +100,8 @@ int Robot::turn_right(int angle) {
 #ifdef DEBUG
     std::cout << "turning right" << std::endl;
 #endif
+    motor->turnRight(angle);
+    
     return new_angle;
 }
 
@@ -112,6 +114,8 @@ int Robot::turn_left(int angle) {
     //    if (!m_disconnected) {
     //        steering_motor->run(AdafruitDCMotor::kBackward);
     //    }
+        motor->turnLeft(angle);
+
     return new_angle;
 }
 
@@ -132,7 +136,7 @@ int Robot::drive_forward(int speed) {
     set_driving_direction(FORWARD);
 
     if (!m_disconnected) {
-        motor->setDriveSpeed(speed % m_max_speed);
+        motor->setDriveSpeed(speed);
         motor->run(FORWARD);
     }
     return m_drive_motor_speed;
@@ -146,7 +150,7 @@ int Robot::drive_reverse(int speed) {
     set_driving_direction(BACKWARD);
 
     if (!m_disconnected) {
-        motor->setDriveSpeed(speed % m_max_speed);
+        motor->setDriveSpeed(speed);
         motor->run(BACKWARD);
     }
     return m_drive_motor_speed;
@@ -163,12 +167,13 @@ int Robot::drive_brake() {
 
 int Robot::change_speed(int speed) {
     //    m_speed += speed;
-    m_drive_motor_speed = speed % m_max_speed;
+    m_drive_motor_speed = speed;
+    motor->setDriveSpeed(speed);
     return m_drive_motor_speed;
 }
 
 int Robot::set_drive_motor_speed(int speed) {
-    m_drive_motor_speed = speed % m_max_speed;
+    m_drive_motor_speed = speed;
 }
 
 int Robot::turn(int angle) {

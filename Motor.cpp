@@ -10,6 +10,7 @@
 
 #define DEBUG
 #include <iostream>
+
 int Motor::init(std::string port) {
     this->port = open(port.c_str(), O_RDWR | O_NOCTTY);
     if (this->port < 0) {
@@ -46,22 +47,16 @@ int Motor::init(std::string port) {
 }
 
 int Motor::run(driving_direction d) {
-    if (d != currentDirection){
+    if (d != currentDirection) {
         currentDirection = d;
-        if (currentDirection == FORWARD){
+        if (currentDirection == FORWARD) {
             send_command(DIRECTION, 0);
-        }else{
+        } else {
             send_command(DIRECTION, 1);
         }
-        
+
     }
     send_command(DRIVE, current_drive_speed);
-#ifdef DEBUG
-    std::cout << "size of int " << sizeof(int) << std::endl;
-    std::cout << "speed " << current_drive_speed << std::endl;
-    std::cout << " speed byte 1 " << (unsigned char)current_drive_speed << std::endl;
-    std::cout << "speed byte 2 " << (unsigned char)(current_drive_speed>>4) << std::endl;
-#endif
 }
 
 int Motor::stop() {
@@ -69,51 +64,67 @@ int Motor::stop() {
     return 0;
 }
 
+int Motor::turnRight(int angle) {
+    unsigned char turn_val = (unsigned char) map(angle, MIN_TURN, MAX_TURN, CENTER_STEER, MAX_RIGHT_STEERING_ANGLE);
+    send_command(TURNRIGHT, turn_val);
+
+#ifdef DEBUG
+    printf(" Turning value: %i \n", turn_val);
+#endif
+    return 0;
+}
+
+int Motor::turnLeft(int angle) {
+    unsigned char turn_val = (unsigned char) map(angle, MIN_TURN, MAX_TURN, CENTER_STEER, MAX_LEFT_STEERING_ANGLE );
+    send_command(TURNRIGHT, turn_val);
+
+#ifdef DEBUG
+    printf(" Turning value: %i \n", turn_val);
+#endif
+    return 0;
+
+
+
+}
+
 int Motor::send_command(command b, int data) {
-    unsigned char char_data[2]={0x00,0x00};
-    if (data <= 255){
-        char_data[1] = (unsigned char)data;
-    }
-    else{
-        char_data[1] = (unsigned char) data;
-        char_data[0] = (unsigned char) (data >> 8);
-    }
-    
+    unsigned char char_data = (unsigned char) data;
+
     switch (b) {
         case TURN:
         {
-            write(Motor::port, Motor::TURNCOMMAND, sizeof (Motor::TURNCOMMAND));
-            write(Motor::port, char_data, 2);
+            write(Motor::port, &(Motor::TURNCOMMAND), sizeof (Motor::TURNCOMMAND));
+            write(Motor::port, &char_data, 1);
         };
             break;
         case BRAKE:
         {
-            write(Motor::port, Motor::BRAKECOMMAND, sizeof (Motor::BRAKECOMMAND));
-            write(Motor::port, char_data, 2);
+            write(Motor::port, &(Motor::BRAKECOMMAND), sizeof (Motor::BRAKECOMMAND));
+            write(Motor::port, &char_data, 1);
         };
             break;
         case DRIVE:
         {
-            write(Motor::port, Motor::DRIVECOMMAND, sizeof (Motor::DRIVECOMMAND));
-            write(Motor::port, char_data, 2);
+            write(Motor::port, &(Motor::DRIVECOMMAND), sizeof (Motor::DRIVECOMMAND));
+            write(Motor::port, &char_data, 1);
         };
             break;
         case TURNLEFT:
         {
-            write(Motor::port, Motor::TURNLEFTCOMMAND, sizeof (Motor::TURNLEFTCOMMAND));
-            write(Motor::port, char_data,2);
+            write(Motor::port, &(Motor::TURNLEFTCOMMAND), sizeof (Motor::TURNLEFTCOMMAND));
+            write(Motor::port, &char_data, 1);
         };
             break;
         case TURNRIGHT:
         {
-            write(Motor::port, Motor::TURNRIGHTCOMMAND, sizeof (Motor::TURNRIGHTCOMMAND));
-            write(Motor::port, char_data, 2);
+            write(Motor::port, &(Motor::TURNRIGHTCOMMAND), sizeof (Motor::TURNRIGHTCOMMAND));
+            write(Motor::port, &char_data, 1);
         };
             break;
         case DIRECTION:
         {
-            write(Motor::port, Motor::DIRECTIONCOMMAND, sizeof (Motor::DIRECTIONCOMMAND));
-            write(Motor::port, char_data,2);
+            write(Motor::port, &(Motor::DIRECTIONCOMMAND), sizeof (Motor::DIRECTIONCOMMAND));
+            write(Motor::port, &char_data, 1);
         };
             break;
         default:
@@ -124,6 +135,6 @@ int Motor::send_command(command b, int data) {
     return 0;
 }
 
-int Motor::turnAbsolute(unsigned char angle) {    
+int Motor::turnAbsolute(unsigned char angle) {
     send_command(TURN, NULLDATA);
 }

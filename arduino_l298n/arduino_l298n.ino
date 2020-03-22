@@ -19,7 +19,7 @@ int pos = 0;    // variable to store the servo position
 int currentSpeed = 0;
 int currentSteeringAngle = 0;
 
-int max_steering_input = 255;
+int max_steering_input = 32768;
 int max_right_steering_angle = 60;
 int max_left_steering_angle = 150;
 int max_right_steering_microseconds = 1100;

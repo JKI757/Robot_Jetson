@@ -239,25 +239,30 @@ int EventHandler::event_loop() {
                 }
             };
                 break;
-            default:{;};
+            default:
+            {
+                ;
+            };
         }
         switch (r->get_mode()) {
             case MANUAL:
             {
                 switch (ev.code) {
-                    case ABS_RX:
+                    case ABS_X:
                     {
-                        if (ev.value < MIN_RIGHT) {
-                            //calculate the angle based on value
+#ifdef DEBUG
+                        std::cout << "x val: " << ev.value << std::endl;
+#endif 
+                        if (ev.value < -MIN_TURN) {
                             r->turn_left(abs(ev.value));
-                        } else if (ev.value > MIN_LEFT) {
+                        } else if (ev.value > MIN_TURN) {
                             r->turn_right(abs(ev.value));
                         } else {
                             r->turn_zero();
                         }
                     };
                         break;
-                    case ABS_Y:
+                    case ABS_RY:
                     {
                         if (ev.value < MIN_THROTTLE_FORWARD) {
                             r->set_driving_direction(FORWARD);
