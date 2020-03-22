@@ -35,7 +35,12 @@ int Robot::init() {
     m_command = BRAKE;
     m_disconnected = true;
     motor = std::make_shared<Motor> ();
-    motor->run(m_driving_direction);
+    motor->init(MOTOR_PORT);
+#ifdef LIDAR
+    lidar->init();
+#endif
+    //motor->run(m_driving_direction);
+    
     return 0;
 }
 

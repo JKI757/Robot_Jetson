@@ -15,12 +15,12 @@
 #include <errno.h> 
 #include <termios.h> 
 #include <unistd.h> 
-
+#include <cmath>
 #include <string>
 
-enum command { TURN, DRIVE, TURNLEFT, TURNRIGHT, DIRECTION, BRAKE };
-//direction: 0=forward, 1=reverse
+enum command { TURN, DRIVE, TURNLEFT, TURNRIGHT, DIRECTION, BRAKE };\
 
+//direction: 0=forward, 1=reverse
 enum driving_direction { FORWARD, BACKWARD };
 
 class Motor {
@@ -50,7 +50,7 @@ private:
     int port;
     driving_direction currentDirection = FORWARD;
     int current_drive_speed=0;
-
+    
     
     const unsigned char TURNCOMMAND[2]        = {0x00, 0x0A};
     const unsigned char BRAKECOMMAND[2]       = {0x00, 0x0B};
@@ -59,6 +59,15 @@ private:
     const unsigned char TURNRIGHTCOMMAND[2]   = {0x00, 0x0E};
     const unsigned char DIRECTIONCOMMAND[2]   = {0x00, 0x0F};
     int NULLDATA                              = 0x00;
+    
+    
+    int map(int val, int a, int b, int c, int d) {
+
+    if ((val <= b) && (val >= a) && (b != a)) {\
+        return round(((float)val - (float)a) / ((float)b - (float)a) * ((float)d - (float)c) + (float)c);
+    } else return -1;
+}
+
 };
 
 #endif /* MOTOR_H */

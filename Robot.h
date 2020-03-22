@@ -12,6 +12,8 @@
 #include <memory>
 #include "Motor.h"
 #include "definitions.h"
+#include "lidar_driver.h"
+
 #define DEBUG
 
 enum mode {MANUAL, AUTOMATIC, TANK, GPS, LIDAR_AUTOMATIC};
@@ -65,6 +67,11 @@ private:
     
     std::shared_ptr<Motor> motor;
     
+#ifdef LIDAR
+    std::shared_ptr<lidar_driver> lidar = std::make_shared<lidar_driver>();
+#endif
+
+
     int m_turn_angle;
     int m_heading;
     int m_speed;
@@ -77,6 +84,8 @@ private:
    
     mode m_current_mode;
     bool m_disconnected;
+    
+    
     
 };
 

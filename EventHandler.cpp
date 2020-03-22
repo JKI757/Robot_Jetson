@@ -206,7 +206,7 @@ int EventHandler::event_loop() {
             case BTN_START:
             { //start Button disconnects
                 if (ev.value == 1) {
-                    //r->toggle_disconnected();
+                    r->toggle_disconnected();
                 }
             };
                 break;
@@ -227,9 +227,11 @@ int EventHandler::event_loop() {
                 break;
             case BTN_WEST:
             { //Y Button -- used as a reset, kills everything and starts over
-                r->init();
+                if (ev.value == 1) {
+                    r->init();
+                }
             }
-            break;
+                break;
             case BTN_SOUTH:
             { //"A" Button -- used to shift from forward to reverse
                 if (ev.value == 1) {
@@ -237,6 +239,7 @@ int EventHandler::event_loop() {
                 }
             };
                 break;
+            default:{;};
         }
         switch (r->get_mode()) {
             case MANUAL:
@@ -254,29 +257,26 @@ int EventHandler::event_loop() {
                         }
                     };
                         break;
-                    case ABS_RY:
+                    case ABS_Y:
                     {
-                        if (ev.value < -150) {
-                            //calculate the angle based on value
-                            //                            r->drive_forward(abs(ev.value));
+                        if (ev.value < MIN_THROTTLE_FORWARD) {
                             r->set_driving_direction(FORWARD);
                             if (r->get_driving()) {
-                                r->change_speed(ev.value);
+                                r->change_speed(abs(ev.value));
                             } else {
                                 r->change_speed(abs(ev.value));
                                 r->drive();
                             }
 
-                        } else if (ev.value > 150) {
+                        } else if (ev.value > MIN_THROTTLE_BACKWARD) {
                             r->set_driving_direction(BACKWARD);
                             if (r->get_driving()) {
-                                r->change_speed(ev.value);
+                                r->change_speed(abs(ev.value));
                             } else {
                                 r->change_speed(abs(ev.value));
                                 r->drive();
                             }
-                            //                            r->drive_reverse(abs(ev.value));
-                        } else if (ev.value >-150 && ev.value < 150) {
+                        } else if (ev.value >= MIN_THROTTLE_FORWARD && ev.value <= MIN_THROTTLE_BACKWARD) {
                             r->drive_brake();
                             r->set_driving(false);
                         }

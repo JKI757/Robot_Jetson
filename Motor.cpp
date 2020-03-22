@@ -8,8 +8,8 @@
 
 #include "Motor.h"
 
-
-
+#define DEBUG
+#include <iostream>
 int Motor::init(std::string port) {
     this->port = open(port.c_str(), O_RDWR | O_NOCTTY);
     if (this->port < 0) {
@@ -52,10 +52,16 @@ int Motor::run(driving_direction d) {
             send_command(DIRECTION, 0);
         }else{
             send_command(DIRECTION, 1);
-            
         }
+        
     }
     send_command(DRIVE, current_drive_speed);
+#ifdef DEBUG
+    std::cout << "size of int " << sizeof(int) << std::endl;
+    std::cout << "speed " << current_drive_speed << std::endl;
+    std::cout << " speed byte 1 " << (unsigned char)current_drive_speed << std::endl;
+    std::cout << "speed byte 2 " << (unsigned char)(current_drive_speed>>4) << std::endl;
+#endif
 }
 
 int Motor::stop() {
