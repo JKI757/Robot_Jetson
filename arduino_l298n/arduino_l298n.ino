@@ -7,7 +7,7 @@
 
 Servo steeringServo; 
 
-int steeringPin = 13;  
+int steeringPin = 15;  
 
 int in1pin=4;
 int in2pin=3;
@@ -41,9 +41,9 @@ uint8_t commandData = 0x0;
 L298N::Direction current_driving_direction = L298N::FORWARD;
 
 void setup() {
-  Serial.begin(115200);
+  Serial1.begin(9600);
 
-  //TCCR0B = TCCR0B & B11111000 | B00000101;
+  TCCR0B = TCCR0B & B11111000 | B00000101;
   steeringServo.attach(steeringPin);//, 900, 2100);  // attaches the servo on pin 9 to the servo object
 
   steeringServo.write(center_steer); //center steering -- 1000-2000 nominal, 1000 is right, 2000 left
@@ -52,77 +52,70 @@ void setup() {
 };
 #ifdef DEBUG
   void dprint(uint8_t d){
-    Serial.print(d);
-    Serial.flush();
+    Serial1.print(d);
+    Serial1.flush();
   }
   void dprintln(uint8_t d){
-    Serial.println(d);
-    Serial.flush();
+    Serial1.println(d);
+    Serial1.flush();
   }
   void dprintln(char x[]){
-    Serial.println(x);
-    Serial.flush();
+    Serial1.println(x);
+    Serial1.flush();
   }  
   void dprint(char x[]){
-    Serial.print(x);
-    Serial.flush();
+    Serial1.print(x);
+    Serial1.flush();
   }
 #endif
 
 
 void serialEvent(){
-  while (Serial.available()){
-    incomingByte = Serial.read();
+  while (Serial1.available()){
+    incomingByte = Serial1.read();
     #ifdef DEBUG
       dprint("serial data received: ");
       dprintln(incomingByte);
     #endif
     if (!commandReceived){
       switch (incomingByte){
-        case 0xA:{
-          commandType=TURN;
-          commandReceived=true;
-          Serial.flush();
-          #ifdef DEBUG
-            dprintln("Turn command received");
-          #endif
-        };break;
-        case 0xB:{
+      
+        case 0x0A:{
           commandType=BRAKE;
           commandReceived=true;
-          Serial.flush();
+          //Serial1.flush();
           #ifdef DEBUG
             dprintln("Brake command received");
           #endif
         };break;
-        case 0xC:{
+        case 0x0B:{
           commandType=DRIVE;
           commandReceived=true;
-          Serial.flush();
+          //Serial1.flush();
           #ifdef DEBUG
             dprintln("Drive command received");
           #endif          
         };break;
-        case 0xD:{
+        case 0x0C:{
           commandType=TURNLEFT;
           commandReceived=true;
-          Serial.flush();
+          //Serial1.flush();
           #ifdef DEBUG
             dprintln("Turn Left Command Received");
           #endif          
         };break;
-        case 0xE:{
+        case 0x0E:{
           commandType=TURNRIGHT;
           commandReceived=true;
-          Serial.flush();
+          //Serial1.flush();
           #ifdef DEBUG
             dprintln("Turn right command received");
           #endif          
         };break;
-        case 0xF:{
+        case 0x0F:{
           commandType=DIRECTION;
           commandReceived=true;
-          Serial.flush();
+          //Serial1.flush();
           #ifdef DEBUG
             dprintln("direction command received");
           #endif          
@@ -154,13 +147,13 @@ int map_steering_angle(int val){
 }
 void turn_left(int angle){
 
-  steeringServo.write(map_steering_angle(angle)); //left
+ steeringServo.writeMicroseconds(map(angle, 60,150 , 1150,2000));
 
 }
 
 void turn_right(int angle){
 
- steeringServo.write(map_steering_angle(angle));
+ steeringServo.writeMicroseconds(map(angle, 60,150 , 1150,2000));
 
 };
 
@@ -231,7 +224,6 @@ void loop() {
       
     };
 
-    Serial.flush();
     serialDataReady=false;
     commandData=0x0;
     commandReceived=false;
@@ -239,7 +231,7 @@ void loop() {
 
 
   #ifdef DEBUG
-    //dprintln("tick");
+    dprintln("tick");
    #endif
 
 }

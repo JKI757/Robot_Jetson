@@ -21,6 +21,12 @@
 #include <iostream>
 
 #include "definitions.h"
+extern "C"{
+#include <linux/i2c-dev.h>
+#include <linux/i2c.h>
+#include <i2c/smbus.h>
+#include <sys/ioctl.h>
+}
 
 enum command { TURN, DRIVE, TURNLEFT, TURNRIGHT, DIRECTION, BRAKE };\
 
@@ -38,7 +44,8 @@ public:
     ~Motor(){};
 
 
-    int init(std::string port);
+    int serialInit(std::string port);
+    int i2cInit(unsigned char bus, char *adx);
 
     int setDriveSpeed(int speed) {
         current_drive_speed = map(speed, MIN_THROTTLE, MAX_THROTTLE, MIN_SPEED_LIMIT, MAX_SPEED_LIMIT) ;
@@ -57,25 +64,30 @@ private:
     int send_command(command b, int data);
 
     int port;
+    
+    unsigned char i2cBus;
+    char i2cadx[12];
+    int i2c_fd;
+    
     driving_direction currentDirection = FORWARD;
     int current_drive_speed=0;
     
     
-    const unsigned char TURNCOMMAND        =  0x0A;
-    const unsigned char BRAKECOMMAND       =  0x0B;
-    const unsigned char DRIVECOMMAND       =  0x0C;
-    const unsigned char TURNLEFTCOMMAND    =  0x0D;
+    const unsigned char BRAKECOMMAND       =  0x0A;
+    const unsigned char DRIVECOMMAND       =  0x0B;
+    const unsigned char TURNLEFTCOMMAND    =  0x0C;
     const unsigned char TURNRIGHTCOMMAND   =  0x0E;
     const unsigned char DIRECTIONCOMMAND   =  0x0F;
-    int NULLDATA                           = 0x00;
+    const unsigned char CARRIAGERETURNBYTE =  0x0D;
+    int NULLDATA                           =  0x00;
     
     
     int map(int val, int a, int b, int c, int d) {
 
-    if ((val <= b) && (val >= a) && (b != a)) {\
-        return round(((float)val - (float)a) / ((float)b - (float)a) * ((float)d - (float)c) + (float)c);
-    } else return -1;
-}
+        if ((val <= b) && (val >= a) && (b != a)) {\
+            return round(((float)val - (float)a) / ((float)b - (float)a) * ((float)d - (float)c) + (float)c);
+        } else return -1;
+    }
 
 };
 

@@ -17,6 +17,10 @@
 
 #define LIDAR_PORT "/dev/ttyUSB0"
 #define MOTOR_PORT "/dev/ttyACM0"
+#define I2C_BUS 0x00
+#define I2C_MOTOR_ADX 0x04
+#define I2C_DEVICE "/dev/i2c-0"
+
 #define MAX_LEFT -32768
 #define MAX_RIGHT 32768
 #define MIN_LEFT 128

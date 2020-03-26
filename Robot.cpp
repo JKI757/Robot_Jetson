@@ -35,12 +35,12 @@ int Robot::init() {
     m_command = BRAKE;
     m_disconnected = true;
     motor = std::make_shared<Motor> ();
-    motor->init(MOTOR_PORT);
+    motor->serialInit(MOTOR_PORT);
 #ifdef LIDAR
     lidar->init();
 #endif
     //motor->run(m_driving_direction);
-    
+
     return 0;
 }
 
@@ -86,7 +86,7 @@ void Robot::drive() {
         motor->run(m_driving_direction);
     }
 #ifdef DEBUG
-    std::cout << "Driving " << m_driving_direction << "speed: " << m_drive_motor_speed << std::endl;
+    std::cout << "Driving " << m_driving_direction << " speed: " << m_drive_motor_speed << std::endl;
 #endif
 }
 
@@ -100,8 +100,10 @@ int Robot::turn_right(int angle) {
 #ifdef DEBUG
     std::cout << "turning right" << std::endl;
 #endif
-    motor->turnRight(angle);
-    
+    if (!m_disconnected) {
+
+        motor->turnRight(angle);
+    }
     return new_angle;
 }
 
@@ -114,8 +116,10 @@ int Robot::turn_left(int angle) {
     //    if (!m_disconnected) {
     //        steering_motor->run(AdafruitDCMotor::kBackward);
     //    }
-        motor->turnLeft(angle);
+    if (!m_disconnected) {
 
+        motor->turnLeft(angle);
+    }
     return new_angle;
 }
 
@@ -227,6 +231,10 @@ mode Robot::set_mode(mode m) {
 
 mode Robot::toggle_mode() {
     m_current_mode = increment_mode(m_current_mode);
+#ifdef DEBUG
+    std::cout << "Change Mode to: " << get_text_mode();
+#endif
+
     return m_current_mode;
 }
 

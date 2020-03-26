@@ -48,18 +48,25 @@
         <ccTool>
           <standard>11</standard>
           <incDir>
-            <pElem>/usr/local/lib</pElem>
+            <pElem>/usr/include/i2c</pElem>
+            <pElem>/usr/include</pElem>
+            <pElem>/usr/local/include</pElem>
           </incDir>
           <incFile>
             <pElem>/usr/local/include/libevdev-1.0/libevdev/libevdev.h</pElem>
             <pElem>/usr/include/rplidar.h</pElem>
             <pElem>/usr/include/hal/types.h</pElem>
+            <pElem>/usr/include/linux/i2c.h</pElem>
+            <pElem>/usr/include/linux/i2c-dev.h</pElem>
+            <pElem>/usr/include/i2c/smbus.h</pElem>
           </incFile>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
             <pElem>/usr/include/hal</pElem>
+            <pElem>/usr/include/i2c</pElem>
+            <pElem>/usr/include/linux</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>evdev</linkerLibLibItem>

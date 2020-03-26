@@ -9,6 +9,7 @@
 
 #include "EventHandler.h"
 #define DEBUG
+#undef EVENT_DEBUG
 
 EventHandler::EventHandler() {
     kill = false;
@@ -62,7 +63,7 @@ void EventHandler::init(std::string device_name, std::shared_ptr<Robot>r_in) {
     }
 
     r = r_in;
-#ifdef DEBUG
+#ifdef EVENT_DEBUG
     printf("Input device ID: bus %#x vendor %#x product %#x\n",
             libevdev_get_id_bustype(dev),
             libevdev_get_id_vendor(dev),
@@ -77,7 +78,7 @@ void EventHandler::init(std::string device_name, std::shared_ptr<Robot>r_in) {
 
 }
 
-#ifdef DEBUG
+#ifdef EVENT_DEBUG
 
 void EventHandler::print_abs_bits(struct libevdev *dev, int axis) {
     const struct input_absinfo *abs;
@@ -189,14 +190,14 @@ int EventHandler::event_loop() {
         if (rc == LIBEVDEV_READ_STATUS_SYNC) {
             //printf("::::::::::::::::::::: dropped ::::::::::::::::::::::\n");
             while (rc == LIBEVDEV_READ_STATUS_SYNC) {
-#ifdef DEBUG
+#ifdef EVENT_DEBUG
                 print_sync_event(&ev);
 #endif
                 rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_SYNC, &ev);
             }
             // printf("::::::::::::::::::::: re-synced ::::::::::::::::::::::\n");
         }
-#ifdef DEBUG 
+#ifdef EVENT_DEBUG 
         else if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
 
             print_event(&ev);
@@ -250,15 +251,10 @@ int EventHandler::event_loop() {
                 switch (ev.code) {
                     case ABS_X:
                     {
-#ifdef DEBUG
-                        std::cout << "x val: " << ev.value << std::endl;
-#endif 
                         if (ev.value < -MIN_TURN) {
                             r->turn_left(abs(ev.value));
                         } else if (ev.value > MIN_TURN) {
                             r->turn_right(abs(ev.value));
-                        } else {
-                            r->turn_zero();
                         }
                     };
                         break;
@@ -268,6 +264,7 @@ int EventHandler::event_loop() {
                             r->set_driving_direction(FORWARD);
                             if (r->get_driving()) {
                                 r->change_speed(abs(ev.value));
+                                r->drive();
                             } else {
                                 r->change_speed(abs(ev.value));
                                 r->drive();
@@ -277,6 +274,7 @@ int EventHandler::event_loop() {
                             r->set_driving_direction(BACKWARD);
                             if (r->get_driving()) {
                                 r->change_speed(abs(ev.value));
+                                r->drive();
                             } else {
                                 r->change_speed(abs(ev.value));
                                 r->drive();

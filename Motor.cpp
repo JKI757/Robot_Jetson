@@ -11,9 +11,12 @@
 #define DEBUG
 #include <iostream>
 
-int Motor::init(std::string port) {
+int Motor::serialInit(std::string port) {
     this->port = open(port.c_str(), O_RDWR | O_NOCTTY);
     if (this->port < 0) {
+#ifdef DEBUG
+        std::cout << "serial port is: " << port << " " << this->port << std::endl;
+#endif
         return -1;
     }
     struct termios tty;
@@ -38,14 +41,21 @@ int Motor::init(std::string port) {
     tty.c_oflag &= ~ONLCR; // Prevent conversion of newline to carriage return/line feed
     tty.c_cc[VTIME] = 10; // Wait for up to 1s (10 deciseconds), returning as soon as any data is received.
     tty.c_cc[VMIN] = 0;
-    cfsetispeed(&tty, B115200);
-    cfsetospeed(&tty, B115200);
+    cfsetispeed(&tty, B9600);
+    cfsetospeed(&tty, B9600);
     if (tcsetattr(this->port, TCSANOW, &tty) != 0) {
         return -1;
     }
     return 0;
 }
 
+int Motor::i2cInit(unsigned char bus, char *adx){
+    i2cBus = bus;
+    strncpy(i2cadx, adx, 12);
+    i2c_fd = open((const char *)&i2cadx, O_RDWR);
+    int r = ioctl(i2c_fd, I2C_SLAVE, i2cadx);
+    
+}
 int Motor::run(driving_direction d) {
     if (d != currentDirection) {
         currentDirection = d;
@@ -66,7 +76,7 @@ int Motor::stop() {
 
 int Motor::turnRight(int angle) {
     unsigned char turn_val = (unsigned char) map(angle, MIN_TURN, MAX_TURN, CENTER_STEER, MAX_RIGHT_STEERING_ANGLE);
-    send_command(TURNRIGHT, turn_val);
+    send_command(TURNLEFT, turn_val);
 
 #ifdef DEBUG
     printf(" Turning value: %i \n", turn_val);
@@ -75,7 +85,7 @@ int Motor::turnRight(int angle) {
 }
 
 int Motor::turnLeft(int angle) {
-    unsigned char turn_val = (unsigned char) map(angle, MIN_TURN, MAX_TURN, CENTER_STEER, MAX_LEFT_STEERING_ANGLE );
+    unsigned char turn_val = (unsigned char) map(angle, MIN_TURN, MAX_TURN, CENTER_STEER, MAX_LEFT_STEERING_ANGLE);
     send_command(TURNRIGHT, turn_val);
 
 #ifdef DEBUG
@@ -89,41 +99,40 @@ int Motor::turnLeft(int angle) {
 
 int Motor::send_command(command b, int data) {
     unsigned char char_data = (unsigned char) data;
-
+    unsigned char read_buf [256];
+#ifdef DEBUG
+    printf("Command is: %i Data is: %02hhx", b, char_data);
+#endif
     switch (b) {
-        case TURN:
-        {
-            write(Motor::port, &(Motor::TURNCOMMAND), sizeof (Motor::TURNCOMMAND));
-            write(Motor::port, &char_data, 1);
-        };
-            break;
         case BRAKE:
         {
-            write(Motor::port, &(Motor::BRAKECOMMAND), sizeof (Motor::BRAKECOMMAND));
+            i2c_smbus_write_byte(i2c_fd, Motor::BRAKECOMMAND);
+            
+            write(Motor::port, &(Motor::BRAKECOMMAND), 1);
             write(Motor::port, &char_data, 1);
         };
             break;
         case DRIVE:
         {
-            write(Motor::port, &(Motor::DRIVECOMMAND), sizeof (Motor::DRIVECOMMAND));
+            write(Motor::port, &(Motor::DRIVECOMMAND), 1);
             write(Motor::port, &char_data, 1);
         };
             break;
         case TURNLEFT:
         {
-            write(Motor::port, &(Motor::TURNLEFTCOMMAND), sizeof (Motor::TURNLEFTCOMMAND));
+            write(Motor::port, &(Motor::TURNLEFTCOMMAND), 1);
             write(Motor::port, &char_data, 1);
         };
             break;
         case TURNRIGHT:
         {
-            write(Motor::port, &(Motor::TURNRIGHTCOMMAND), sizeof (Motor::TURNRIGHTCOMMAND));
+            write(Motor::port, &(Motor::TURNRIGHTCOMMAND), 1);
             write(Motor::port, &char_data, 1);
         };
             break;
         case DIRECTION:
         {
-            write(Motor::port, &(Motor::DIRECTIONCOMMAND), sizeof (Motor::DIRECTIONCOMMAND));
+            write(Motor::port, &(Motor::DIRECTIONCOMMAND), 1);
             write(Motor::port, &char_data, 1);
         };
             break;
@@ -132,6 +141,9 @@ int Motor::send_command(command b, int data) {
             return -1;
         };
     };
+
+
+    usleep (1000);
     return 0;
 }
 
