@@ -36,6 +36,8 @@ int Robot::init() {
     m_disconnected = true;
     motor = std::make_shared<Motor> ();
     motor->serialInit(MOTOR_PORT);
+//    std::string I2C_DEVICE = "/dev/i2c-0";
+//    motor->i2cInit(I2C_BUS, (const char *)I2C_DEVICE.c_str());
 #ifdef LIDAR
     lidar->init();
 #endif
@@ -128,9 +130,9 @@ int Robot::turn_zero() {
     std::cout << "turning zero : " << std::endl;
 #endif
 
-    if (!m_disconnected) {
-        motor->turnAbsolute(0);
-    }
+//    if (!m_disconnected) {
+//        motor->turnAbsolute(0);
+//    }
 }
 
 int Robot::drive_forward(int speed) {
@@ -232,7 +234,7 @@ mode Robot::set_mode(mode m) {
 mode Robot::toggle_mode() {
     m_current_mode = increment_mode(m_current_mode);
 #ifdef DEBUG
-    std::cout << "Change Mode to: " << get_text_mode();
+    std::cout << "Change Mode to: " << get_text_mode() << std::endl;
 #endif
 
     return m_current_mode;

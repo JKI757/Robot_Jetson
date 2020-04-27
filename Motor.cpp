@@ -9,16 +9,24 @@
 #include "Motor.h"
 
 #define DEBUG
-#include <iostream>
 
 int Motor::serialInit(std::string port) {
-    this->port = open(port.c_str(), O_RDWR | O_NOCTTY);
-    if (this->port < 0) {
 #ifdef DEBUG
-        std::cout << "serial port is: " << port << " " << this->port << std::endl;
+    printf("serial port is: %s %i \n", port.c_str(), this->port);
+    
 #endif
+    this->port = open(port.c_str(), O_RDWR );
+
+    if (flock(this->port, LOCK_EX | LOCK_NB) == -1) {
+        throw std::runtime_error("Serial port with file descriptor " +
+                std::to_string(this->port) + " is already locked by another process.");
+    }
+
+    if (this->port < 0) {
         return -1;
     }
+    
+    
     struct termios tty;
     memset(&tty, 0, sizeof (tty));
     if (tcgetattr(this->port, &tty) != 0) {
@@ -41,20 +49,18 @@ int Motor::serialInit(std::string port) {
     tty.c_oflag &= ~ONLCR; // Prevent conversion of newline to carriage return/line feed
     tty.c_cc[VTIME] = 10; // Wait for up to 1s (10 deciseconds), returning as soon as any data is received.
     tty.c_cc[VMIN] = 0;
-    cfsetispeed(&tty, B9600);
-    cfsetospeed(&tty, B9600);
+    
+    cfsetispeed(&tty, B115200);
+    cfsetospeed(&tty, B115200);
+    
+
+    
     if (tcsetattr(this->port, TCSANOW, &tty) != 0) {
         return -1;
     }
-    return 0;
-}
-
-int Motor::i2cInit(unsigned char bus, char *adx){
-    i2cBus = bus;
-    strncpy(i2cadx, adx, 12);
-    i2c_fd = open((const char *)&i2cadx, O_RDWR);
-    int r = ioctl(i2c_fd, I2C_SLAVE, i2cadx);
     
+
+    return 0;
 }
 int Motor::run(driving_direction d) {
     if (d != currentDirection) {
@@ -79,7 +85,7 @@ int Motor::turnRight(int angle) {
     send_command(TURNLEFT, turn_val);
 
 #ifdef DEBUG
-    printf(" Turning value: %i \n", turn_val);
+    printf(" \nTurning value: %i \n", turn_val);
 #endif
     return 0;
 }
@@ -89,7 +95,7 @@ int Motor::turnLeft(int angle) {
     send_command(TURNRIGHT, turn_val);
 
 #ifdef DEBUG
-    printf(" Turning value: %i \n", turn_val);
+    printf(" \nTurning value: %i \n", turn_val);
 #endif
     return 0;
 
@@ -97,56 +103,109 @@ int Motor::turnLeft(int angle) {
 
 }
 
-int Motor::send_command(command b, int data) {
-    unsigned char char_data = (unsigned char) data;
-    unsigned char read_buf [256];
+int Motor::send_command(command b, unsigned char data) {
+    char read_buf [256] = {0x00};
+    int n = 0;
+    int o = 0;
+    int read_bytes = 0;
 #ifdef DEBUG
-    printf("Command is: %i Data is: %02hhx", b, char_data);
+    printf("\nCommand is: %i Data is: %02hhx\n", b, data);
 #endif
     switch (b) {
         case BRAKE:
         {
-            i2c_smbus_write_byte(i2c_fd, Motor::BRAKECOMMAND);
+
+            n = write(this->port, &(Motor::BRAKECOMMAND), 1);
+            o = write(this->port, &data, 1);
             
-            write(Motor::port, &(Motor::BRAKECOMMAND), 1);
-            write(Motor::port, &char_data, 1);
+#ifdef DEBUG
+            tcdrain(this->port);
+            read_bytes = read(this->port, read_buf, sizeof(read_buf));
+            if (read_bytes > 0){
+                read_buf[read_bytes] = 0;
+                printf("Read %d: \"%s\"\n", read_bytes, read_buf);
+            }
+#endif
         };
             break;
         case DRIVE:
         {
-            write(Motor::port, &(Motor::DRIVECOMMAND), 1);
-            write(Motor::port, &char_data, 1);
+            n = write(this->port, &(Motor::DRIVECOMMAND), 1);
+            o = write(this->port, &data, 1);
+#ifdef DEBUG
+            tcdrain(this->port);
+            read_bytes = read(this->port, read_buf, sizeof(read_buf));
+            if (read_bytes > 0){
+                read_buf[read_bytes] = 0;
+                printf("Read %d: \"%s\"\n", read_bytes, read_buf);
+            }
+#endif
+
         };
             break;
         case TURNLEFT:
         {
-            write(Motor::port, &(Motor::TURNLEFTCOMMAND), 1);
-            write(Motor::port, &char_data, 1);
+            n = write(this->port, &(Motor::TURNLEFTCOMMAND), 1);
+            o = write(this->port, &data, 1);
+#ifdef DEBUG
+            tcdrain(this->port);
+            read_bytes = read(this->port, read_buf, sizeof(read_buf));
+            if (read_bytes > 0){
+                read_buf[read_bytes] = 0;
+                printf("Read %d: \"%s\"\n", read_bytes, read_buf);
+            }
+#endif
+
         };
             break;
         case TURNRIGHT:
         {
-            write(Motor::port, &(Motor::TURNRIGHTCOMMAND), 1);
-            write(Motor::port, &char_data, 1);
+            n = write(this->port, &(Motor::TURNRIGHTCOMMAND), 1);
+            o = write(this->port, &data, 1);
+#ifdef DEBUG
+            tcdrain(this->port);
+            read_bytes = read(this->port, read_buf, sizeof(read_buf));
+            if (read_bytes > 0){
+                read_buf[read_bytes] = 0;
+                printf("Read %d: \"%s\"\n", read_bytes, read_buf);
+            }
+#endif
+
         };
             break;
         case DIRECTION:
         {
-            write(Motor::port, &(Motor::DIRECTIONCOMMAND), 1);
-            write(Motor::port, &char_data, 1);
+            n = write(this->port, &(Motor::DIRECTIONCOMMAND), 1);
+            o = write(this->port, &data, 1);
+#ifdef DEBUG
+            tcdrain(this->port);
+            read_bytes = read(this->port, read_buf, sizeof(read_buf));
+            if (read_bytes > 0){
+                read_buf[read_bytes] = 0;
+                printf("Read %d: \"%s\"\n", read_bytes, read_buf);
+            }
+#endif
+
         };
             break;
         default:
         {
             return -1;
         };
+
     };
+#ifdef DEBUG
+    printf("\nnumber of command bytes sent: %i\n", n);
+    printf("\nnumber of data bytes sent: %i\n", o);
+    printf("\nnumber of bytes read: %i\n", read_bytes);
+    n = 0;
+    o = 0;
+    read_bytes = 0;
+    memset(read_buf, 0, sizeof(read_buf));
+#endif
 
+    //usleep (100);
+    ioctl(this->port, TCFLSH, 2);
 
-    usleep (1000);
     return 0;
-}
-
-int Motor::turnAbsolute(unsigned char angle) {
-    send_command(TURN, NULLDATA);
 }

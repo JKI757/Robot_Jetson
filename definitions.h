@@ -13,13 +13,13 @@
 
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
-#include </usr/local/include/libevdev-1.0/libevdev/libevdev.h>
+#include <libevdev.h>
 
-#define LIDAR_PORT "/dev/ttyUSB0"
-#define MOTOR_PORT "/dev/ttyACM0"
+#define LIDAR_PORT "/dev/ttyUSB1"
+#define MOTOR_PORT "/dev/ttyUSB0"
 #define I2C_BUS 0x00
 #define I2C_MOTOR_ADX 0x04
-#define I2C_DEVICE "/dev/i2c-0"
+//#define I2C_DEVICE "/dev/i2c-0"
 
 #define MAX_LEFT -32768
 #define MAX_RIGHT 32768
@@ -29,6 +29,7 @@
 #define MIN_TURN 128
 #define MAX_TURN 32768
 
+//these are all inputs from the controller
 #define THROTTLE_KEY ABS_RY
 #define MAX_THROTTLE_FORWARD -32768
 #define MIN_THROTTLE_FORWARD -128
@@ -43,12 +44,9 @@
 
 
 #define MAX_STEERING_INPUT 255
-#define MAX_RIGHT_STEERING_ANGLE 60
-#define MAX_LEFT_STEERING_ANGLE 150
-#define MAX_RIGHT_STEERING_MICROSECONDS 1100
-#define MAX_LEFT_STEERING_MICROSECONDS 1900
-
-#define CENTER_STEER 105
+#define MAX_RIGHT_STEERING_ANGLE 0x00
+#define MAX_LEFT_STEERING_ANGLE 0xE0
+#define CENTER_STEER 0x80
 
 
 

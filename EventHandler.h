@@ -26,7 +26,7 @@
 #include <string>
 #include <memory>
 
-#include </usr/local/include/libevdev-1.0/libevdev/libevdev.h>
+#include <libevdev.h>
 
 #include "Robot.h"
 #include "definitions.h"

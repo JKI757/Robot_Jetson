@@ -51,14 +51,14 @@
             <pElem>/usr/include/i2c</pElem>
             <pElem>/usr/include</pElem>
             <pElem>/usr/local/include</pElem>
+            <pElem>/usr/include/libevdev-1.0/libevdev</pElem>
+            <pElem>/usr/include/hal</pElem>
           </incDir>
           <incFile>
-            <pElem>/usr/local/include/libevdev-1.0/libevdev/libevdev.h</pElem>
             <pElem>/usr/include/rplidar.h</pElem>
-            <pElem>/usr/include/hal/types.h</pElem>
-            <pElem>/usr/include/linux/i2c.h</pElem>
             <pElem>/usr/include/linux/i2c-dev.h</pElem>
-            <pElem>/usr/include/i2c/smbus.h</pElem>
+            <pElem>/usr/include/libevdev-1.0/libevdev/libevdev.h</pElem>
+            <pElem>/usr/include/hal/types.h</pElem>
           </incFile>
         </ccTool>
         <linkerTool>
@@ -70,9 +70,9 @@
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>evdev</linkerLibLibItem>
-            <linkerLibLibItem>i2c</linkerLibLibItem>
             <linkerLibLibItem>rplidar_sdk</linkerLibLibItem>
             <linkerLibLibItem>pthread</linkerLibLibItem>
+            <linkerLibLibItem>i2c</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
