@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=robot_libevdev
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/robot_libevdev
+CND_ARTIFACT_NAME_Debug=r_l
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/r_l
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=robotlibevdev.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/robotlibevdev.tar
+CND_PACKAGE_NAME_Debug=rl.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/rl.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=robot_libevdev
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/robot_libevdev
+CND_ARTIFACT_NAME_Release=r_l
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/r_l
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=robotlibevdev.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/robotlibevdev.tar
+CND_PACKAGE_NAME_Release=rl.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/rl.tar
 #
 # include compiler specific variables
 #

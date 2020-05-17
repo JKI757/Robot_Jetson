@@ -5,12 +5,10 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>EventHandler.h</itemPath>
+      <itemPath>Motor.h</itemPath>
       <itemPath>Robot.h</itemPath>
-      <itemPath>adafruitdcmotor.h</itemPath>
-      <itemPath>adafruitmotorhat.h</itemPath>
       <itemPath>definitions.h</itemPath>
-      <itemPath>i2cdevice.h</itemPath>
-      <itemPath>pwm.h</itemPath>
+      <itemPath>lidar_driver.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -20,12 +18,10 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>EventHandler.cpp</itemPath>
+      <itemPath>Motor.cpp</itemPath>
       <itemPath>Robot.cpp</itemPath>
-      <itemPath>adafruitdcmotor.cpp</itemPath>
-      <itemPath>adafruitmotorhat.cpp</itemPath>
-      <itemPath>i2cdevice.cpp</itemPath>
+      <itemPath>lidar_driver.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
-      <itemPath>pwm.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -38,6 +34,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>Arduino_Motor_Control</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -51,54 +48,55 @@
         <ccTool>
           <standard>11</standard>
           <incDir>
-            <pElem>/usr/local/lib</pElem>
+            <pElem>/usr/include/i2c</pElem>
+            <pElem>/usr/include</pElem>
+            <pElem>/usr/local/include</pElem>
+            <pElem>/usr/include/libevdev-1.0/libevdev</pElem>
+            <pElem>/usr/include/hal</pElem>
           </incDir>
           <incFile>
-            <pElem>/usr/local/include/libevdev-1.0/libevdev/libevdev.h</pElem>
-            <pElem>/usr/local/include/wiringPi.h</pElem>
-            <pElem>/usr/local/include/wiringPiI2C.h</pElem>
+            <pElem>/usr/include/rplidar.h</pElem>
+            <pElem>/usr/include/linux/i2c-dev.h</pElem>
+            <pElem>/usr/include/libevdev-1.0/libevdev/libevdev.h</pElem>
+            <pElem>/usr/include/hal/types.h</pElem>
           </incFile>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
+            <pElem>/usr/include/hal</pElem>
+            <pElem>/usr/include/i2c</pElem>
+            <pElem>/usr/include/linux</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>evdev</linkerLibLibItem>
-            <linkerLibLibItem>wiringPi</linkerLibLibItem>
+            <linkerLibLibItem>rplidar_sdk</linkerLibLibItem>
             <linkerLibLibItem>pthread</linkerLibLibItem>
-            <linkerLibLibItem>crypt</linkerLibLibItem>
-            <linkerLibLibItem>rt</linkerLibLibItem>
+            <linkerLibLibItem>i2c</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Arduino_Motor_Control" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="EventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Motor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Motor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="adafruitdcmotor.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="adafruitdcmotor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="adafruitmotorhat.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="adafruitmotorhat.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="i2cdevice.cpp" ex="false" tool="1" flavor2="0">
+      <item path="lidar_driver.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="i2cdevice.h" ex="false" tool="3" flavor2="0">
+      <item path="lidar_driver.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pwm.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pwm.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -121,33 +119,27 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Arduino_Motor_Control" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="EventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Motor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Motor.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="adafruitdcmotor.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="adafruitdcmotor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="adafruitmotorhat.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="adafruitmotorhat.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="i2cdevice.cpp" ex="false" tool="1" flavor2="0">
+      <item path="lidar_driver.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="i2cdevice.h" ex="false" tool="3" flavor2="0">
+      <item path="lidar_driver.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pwm.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="pwm.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

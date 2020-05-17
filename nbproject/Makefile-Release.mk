@@ -36,12 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/EventHandler.o \
+	${OBJECTDIR}/Motor.o \
 	${OBJECTDIR}/Robot.o \
-	${OBJECTDIR}/adafruitdcmotor.o \
-	${OBJECTDIR}/adafruitmotorhat.o \
-	${OBJECTDIR}/i2cdevice.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/pwm.o
+	${OBJECTDIR}/lidar_driver.o \
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -62,46 +60,36 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/EventHandler.o: EventHandler.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
 
+${OBJECTDIR}/Motor.o: Motor.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Motor.o Motor.cpp
+
 ${OBJECTDIR}/Robot.o: Robot.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
 
-${OBJECTDIR}/adafruitdcmotor.o: adafruitdcmotor.cpp
+${OBJECTDIR}/lidar_driver.o: lidar_driver.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitdcmotor.o adafruitdcmotor.cpp
-
-${OBJECTDIR}/adafruitmotorhat.o: adafruitmotorhat.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitmotorhat.o adafruitmotorhat.cpp
-
-${OBJECTDIR}/i2cdevice.o: i2cdevice.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/i2cdevice.o i2cdevice.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lidar_driver.o lidar_driver.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/pwm.o: pwm.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pwm.o pwm.cpp
 
 # Subprojects
 .build-subprojects:

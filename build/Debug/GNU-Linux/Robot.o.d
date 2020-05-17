@@ -1,22 +1,33 @@
-build/Debug/GNU-Linux/Robot.o: Robot.cpp \
- /usr/local/include/libevdev-1.0/libevdev/libevdev.h \
- /usr/local/include/wiringPi.h /usr/local/include/wiringPiI2C.h Robot.h \
- definitions.h adafruitmotorhat.h pwm.h i2cdevice.h adafruitdcmotor.h
+build/Debug/GNU-Linux/Robot.o: Robot.cpp /usr/include/rplidar.h \
+ /usr/include/hal/types.h /usr/include/rplidar_protocol.h \
+ /usr/include/rplidar_cmd.h /usr/include/rplidar_driver.h \
+ /usr/include/linux/i2c-dev.h \
+ /usr/include/libevdev-1.0/libevdev/libevdev.h /usr/include/hal/types.h \
+ Robot.h Motor.h definitions.h \
+ /usr/include/libevdev-1.0/libevdev/libevdev.h lidar_driver.h
 
-/usr/local/include/libevdev-1.0/libevdev/libevdev.h:
+/usr/include/rplidar.h:
 
-/usr/local/include/wiringPi.h:
+/usr/include/hal/types.h:
 
-/usr/local/include/wiringPiI2C.h:
+/usr/include/rplidar_protocol.h:
+
+/usr/include/rplidar_cmd.h:
+
+/usr/include/rplidar_driver.h:
+
+/usr/include/linux/i2c-dev.h:
+
+/usr/include/libevdev-1.0/libevdev/libevdev.h:
+
+/usr/include/hal/types.h:
 
 Robot.h:
 
+Motor.h:
+
 definitions.h:
 
-adafruitmotorhat.h:
+/usr/include/libevdev-1.0/libevdev/libevdev.h:
 
-pwm.h:
-
-i2cdevice.h:
-
-adafruitdcmotor.h:
+lidar_driver.h:

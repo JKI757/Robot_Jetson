@@ -36,12 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/EventHandler.o \
+	${OBJECTDIR}/Motor.o \
 	${OBJECTDIR}/Robot.o \
-	${OBJECTDIR}/adafruitdcmotor.o \
-	${OBJECTDIR}/adafruitmotorhat.o \
-	${OBJECTDIR}/i2cdevice.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/pwm.o
+	${OBJECTDIR}/lidar_driver.o \
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -58,50 +56,40 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/local/lib -levdev -lwiringPi -lpthread -lcrypt -lrt
+LDLIBSOPTIONS=-L/usr/local/lib -L/usr/include/hal -L/usr/include/i2c -L/usr/include/linux -levdev -lrplidar_sdk -lpthread -li2c
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/robot_libevdev ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/EventHandler.o: EventHandler.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
+
+${OBJECTDIR}/Motor.o: Motor.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Motor.o Motor.cpp
 
 ${OBJECTDIR}/Robot.o: Robot.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
 
-${OBJECTDIR}/adafruitdcmotor.o: adafruitdcmotor.cpp
+${OBJECTDIR}/lidar_driver.o: lidar_driver.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitdcmotor.o adafruitdcmotor.cpp
-
-${OBJECTDIR}/adafruitmotorhat.o: adafruitmotorhat.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/adafruitmotorhat.o adafruitmotorhat.cpp
-
-${OBJECTDIR}/i2cdevice.o: i2cdevice.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/i2cdevice.o i2cdevice.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lidar_driver.o lidar_driver.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/pwm.o: pwm.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/lib -include /usr/local/include/libevdev-1.0/libevdev/libevdev.h -include /usr/local/include/wiringPi.h -include /usr/local/include/wiringPiI2C.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pwm.o pwm.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
