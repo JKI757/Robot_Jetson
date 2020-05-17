@@ -7,19 +7,31 @@
 1. Jetson Nano Devkit Model
 2. Generic Wifi Dongle -- could also use an M2 wifi module supported by the Jetson Nano.
 3. AUSTAR 313mm Wheelbase Chassis Frame W/ Tires For 1/10 AXIAL SCX10 RC Car
+
 ![austar pic](https://github.com/JKI757/Robot_c-/blob/master/pics/Screen%20Shot%202020-05-17%20at%206.46.17%20PM.png)
+
 4. Logitech F710 Controller
 5. NodeMCU ESP8266 Microcontroller
+
 ![nodemcu pic](https://github.com/JKI757/Robot_c-/blob/master/pics/IMG_5703.jpeg)
+
 6. DC Motor Driver, DROK L298 Dual H Bridge Motor Speed Controller DC 6.5V-27V 7A PWM Motor Regulator Board 12V 24V Electric Motor Control Module Industrial 160W with Optocoupler Isolation
+
 ![drok motor controller pic](https://github.com/JKI757/Robot_c-/blob/master/pics/IMG_5183.jpeg)
+
 7. Elegoo EL-CP-004 120pcs Multicolored Dupont Wire 40pin Male to Female, 40pin Male to Male, 40pin Female to Female Breadboard Jumper Wires Ribbon Cables Kit for arduino
 8. 2* DC Buck Module, DROK Adjustable Buck Converter Step Down Voltage Regulator 6V-32V 30V 24V 12V to 1.5-32V 5V 5A LCD Power Supply Volt Reducer Transformer Module Board with USB Port Protective Case 
+
 ![dc buck converter DROK](https://github.com/JKI757/Robot_c-/blob/master/pics/IMG_5702.jpeg)
+
 9. TalentCell Rechargeable 12V/11000mAh 9V/14500mAh 5V/26400mAh DC Output Lithium ion Battery Pack for LED Strip and CCTV Camera, Portable Li-ion Power Bank with AC/DC Charger, Black
+
 ![battery pic](https://github.com/JKI757/Robot_c-/blob/master/pics/IMG_5188.jpeg)
+
 10. Protek 130T Digital High Torque Servo
+
 ![protek pic](https://github.com/JKI757/Robot_c-/blob/master/pics/IMG_5704.jpeg)
+
 11. RPLIDAR A1 -- not currently used, but installed.
 12. Makeblock Starter Robot Kit (IR Version)
 13. Assorted hookup wires, standoffs, breadboard, etc.
@@ -29,6 +41,8 @@
 
 ## Concept
 - So one day I was taking AI4R at Georgia Tech, and one of the extra credit assignments was to build a robot, any robot, for possibly a point or two of extra credit.  So I bought the Makeblock starter kit and put it together.  It was a cool little skid steer, I could drive it around the floor a little bit with its IR remote, it could detect walls and back up instead of running into them, it had a little arduino onboard, but it was pretty limited in what it could do.
+
+![old robot pic](https://github.com/JKI757/Robot_c-/blob/master/pics/IMG_4411.jpeg)
 
 - But then I got bored.  There just wasn't much I could do with the platform.  So I started looking up different robotics platforms, looking up sensors, looking at all kinds of different ways to get involved in the field.  
 
