@@ -1,6 +1,7 @@
-# Robot_c-
 
-# Robotics
+# Robotics Research and Development
+
+![Robot pic](https://github.com/JKI757/Robot_c-/blob/master/pics/IMG_5699%20(2).jpeg)
 
 ## Bill of Materials:
 1. Jetson Nano Devkit Model
