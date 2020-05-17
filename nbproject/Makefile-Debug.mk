@@ -56,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/local/lib -L/usr/include/hal -L/usr/include/i2c -L/usr/include/linux -levdev -lrplidar_sdk -lpthread -li2c
+LDLIBSOPTIONS=-L/usr/local/lib -L/usr/include/hal -L/usr/include/i2c -L/usr/include/linux -levdev -lrplidar_sdk -lpthread -li2c -lJetsonGPIO
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -69,27 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/r_l: ${OBJECTFILES}
 ${OBJECTDIR}/EventHandler.o: EventHandler.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -include /usr/local/include/JetsonGPIO.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
 
 ${OBJECTDIR}/Motor.o: Motor.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Motor.o Motor.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -include /usr/local/include/JetsonGPIO.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Motor.o Motor.cpp
 
 ${OBJECTDIR}/Robot.o: Robot.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -include /usr/local/include/JetsonGPIO.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
 
 ${OBJECTDIR}/lidar_driver.o: lidar_driver.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lidar_driver.o lidar_driver.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -include /usr/local/include/JetsonGPIO.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/lidar_driver.o lidar_driver.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/usr/include/i2c -I/usr/include -I/usr/local/include -I/usr/include/libevdev-1.0/libevdev -I/usr/include/hal -include /usr/include/rplidar.h -include /usr/include/linux/i2c-dev.h -include /usr/include/libevdev-1.0/libevdev/libevdev.h -include /usr/include/hal/types.h -include /usr/local/include/JetsonGPIO.h -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

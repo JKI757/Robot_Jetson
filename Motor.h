@@ -33,7 +33,7 @@ enum command {
 //direction: 0=forward, 1=reverse
 
 enum driving_direction {
-    FORWARD, BACKWARD
+    FORWARD, BACKWARD, BRAKE
 };
 
 class Motor {

@@ -5,8 +5,10 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>EventHandler.h</itemPath>
+      <itemPath>L298N.hpp</itemPath>
       <itemPath>Motor.h</itemPath>
       <itemPath>Robot.h</itemPath>
+      <itemPath>Servo.hpp</itemPath>
       <itemPath>definitions.h</itemPath>
       <itemPath>lidar_driver.h</itemPath>
     </logicalFolder>
@@ -59,6 +61,7 @@
             <pElem>/usr/include/linux/i2c-dev.h</pElem>
             <pElem>/usr/include/libevdev-1.0/libevdev/libevdev.h</pElem>
             <pElem>/usr/include/hal/types.h</pElem>
+            <pElem>/usr/local/include/JetsonGPIO.h</pElem>
           </incFile>
         </ccTool>
         <linkerTool>
@@ -73,6 +76,7 @@
             <linkerLibLibItem>rplidar_sdk</linkerLibLibItem>
             <linkerLibLibItem>pthread</linkerLibLibItem>
             <linkerLibLibItem>i2c</linkerLibLibItem>
+            <linkerLibLibItem>JetsonGPIO</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -82,6 +86,8 @@
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="L298N.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Motor.h" ex="false" tool="3" flavor2="0">
@@ -89,6 +95,8 @@
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Servo.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -125,6 +133,8 @@
       </item>
       <item path="EventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="L298N.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Motor.h" ex="false" tool="3" flavor2="0">
@@ -132,6 +142,8 @@
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Servo.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
       </item>

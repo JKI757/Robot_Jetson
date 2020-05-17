@@ -66,6 +66,10 @@
 
 #define NUMBER_OF_MODES 5
 
+#define JETSON_STEER_PIN GPIO07 //pin32
+#define JETSON_DRIVE_PIN GPIO13 //pin33
+#define JETSON_IN1_PIN GPIO01 //pin 29, gpio5
+#define JETSON_IN2_PIN GPIO06 //pin 31, gpio6
 
 #ifdef __cplusplus
 extern "C" {
