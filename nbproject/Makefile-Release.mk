@@ -36,8 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/EventHandler.o \
+	${OBJECTDIR}/L298N_Jetson.o \
 	${OBJECTDIR}/Motor.o \
 	${OBJECTDIR}/Robot.o \
+	${OBJECTDIR}/Servo.o \
 	${OBJECTDIR}/lidar_driver.o \
 	${OBJECTDIR}/main.o
 
@@ -71,6 +73,11 @@ ${OBJECTDIR}/EventHandler.o: EventHandler.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EventHandler.o EventHandler.cpp
 
+${OBJECTDIR}/L298N_Jetson.o: L298N_Jetson.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/L298N_Jetson.o L298N_Jetson.cpp
+
 ${OBJECTDIR}/Motor.o: Motor.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -80,6 +87,11 @@ ${OBJECTDIR}/Robot.o: Robot.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Robot.o Robot.cpp
+
+${OBJECTDIR}/Servo.o: Servo.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Servo.o Servo.cpp
 
 ${OBJECTDIR}/lidar_driver.o: lidar_driver.cpp
 	${MKDIR} -p ${OBJECTDIR}

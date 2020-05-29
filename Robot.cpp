@@ -34,10 +34,15 @@ int Robot::init() {
     m_driving_direction = FORWARD;
     m_command = BRAKE;
     m_disconnected = true;
-    motor = std::make_shared<Motor> ();
-    motor->serialInit(MOTOR_PORT);
-//    std::string I2C_DEVICE = "/dev/i2c-0";
-//    motor->i2cInit(I2C_BUS, (const char *)I2C_DEVICE.c_str());
+    motor = std::make_shared<Motor> ( 
+       JETSON_DRIVE_PIN, 
+       JETSON_IN1_PIN, 
+       JETSON_IN2_PIN, 
+       JETSON_STEER_PIN,
+       1000,
+       2000,
+       0,
+       255);
 #ifdef LIDAR
     lidar->init();
 #endif
@@ -245,7 +250,7 @@ mode Robot::increment_mode(mode current_mode) {
     return (m_current_mode = (mode) (++i % NUMBER_OF_MODES));
 }
 
-driving_direction Robot::toggle_driving_direction() {
+Direction Robot::toggle_driving_direction() {
 #ifdef DEBUG
     std::cout << "Change Driving Direction ";
 #endif

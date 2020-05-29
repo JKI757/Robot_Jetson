@@ -1,48 +1,50 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * MIT License
  */
 
 /* 
  * File:   Servo.hpp
- * Author: josh
+ * Author: josh - JKI757
  *
- * Created on May 1, 2020, 11:25 PM
+ * Created on May 24, 2020, 12:21 AM
  */
 
-#ifndef SERVO_HPP
-#define SERVO_HPP
-#include "JetsonGPIO.h"
+#pragma once 
 
-class Servo{
+#include <JetsonGPIO.h>
+#include <memory>
+#include <cmath>
+#include <iostream>
+#include <string>
+class Servo_Jetson {
 public:
+    Servo_Jetson();
+    Servo_Jetson(const Servo_Jetson& orig);
+    virtual ~Servo_Jetson();
     
-    Servo(){};
-    void init(unsigned char pin){
-        	GPIO::setup(pin, GPIO::OUT, GPIO::HIGH);
-	p = std::make_shared<GPIO::PWM>(pin, 50);
-        minFreq=1000;
-        maxFreq=2000;
-    }
-    void init(unsigned char pin, int minFreq, int maxFreq){
-        GPIO::setup(pin, GPIO::OUT, GPIO::HIGH);
-	p = std::make_shared<GPIO::PWM>(pin, 50);
-        this->minFreq=minFreq;
-        this->maxFreq=maxFreq;
+    Servo_Jetson(int pin);
+    Servo_Jetson(std::shared_ptr<GPIO::PWM> steer, bool setup);
+    Servo_Jetson(int pin, const unsigned short minUs, const unsigned short maxUs);
+    Servo_Jetson(int pin, const unsigned short minUs, const unsigned short maxUs, const unsigned short mapMin, const unsigned short mapMax);
+    Servo_Jetson(std::shared_ptr<GPIO::PWM> steer, const unsigned short minUs, const unsigned short maxUs, const unsigned short mapMin, const unsigned short mapMax, bool setup);
+    unsigned short mapAngle(const short val);
+    void writeAngle(const unsigned short angle);
+    void writeUs(const unsigned short microseconds);
+    void writeMappedValue(const short val);
 
-    }
-    void write(int microseconds);
-    int read();
-    
+
 private:
-    unsigned char pin;
-    int minFreq;
-    int maxFreq;
-    int centerFreq;
-    std::shared_ptr<GPIO::PWM> p;
+    int pin; 
+    unsigned short angle;
+    unsigned short microseconds;
+    unsigned short minUs;
+    unsigned short maxUs;
+    short mapMin;
+    short mapMax;
+    std::shared_ptr<GPIO::PWM> Steer_PWM;
+    unsigned short map(const short val);
+    bool setup;
+
 };
 
-
-#endif /* SERVO_HPP */
 

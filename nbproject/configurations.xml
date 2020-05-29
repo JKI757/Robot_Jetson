@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>EventHandler.h</itemPath>
       <itemPath>L298N.hpp</itemPath>
+      <itemPath>L298N_Jetson.hpp</itemPath>
       <itemPath>Motor.h</itemPath>
       <itemPath>Robot.h</itemPath>
       <itemPath>Servo.hpp</itemPath>
@@ -20,8 +21,10 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>EventHandler.cpp</itemPath>
+      <itemPath>L298N_Jetson.cpp</itemPath>
       <itemPath>Motor.cpp</itemPath>
       <itemPath>Robot.cpp</itemPath>
+      <itemPath>Servo.cpp</itemPath>
       <itemPath>lidar_driver.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -88,6 +91,10 @@
       </item>
       <item path="L298N.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="L298N_Jetson.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="L298N_Jetson.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Motor.h" ex="false" tool="3" flavor2="0">
@@ -95,6 +102,8 @@
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Servo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Servo.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -135,6 +144,10 @@
       </item>
       <item path="L298N.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="L298N_Jetson.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="L298N_Jetson.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Motor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Motor.h" ex="false" tool="3" flavor2="0">
@@ -142,6 +155,8 @@
       <item path="Robot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Servo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Servo.hpp" ex="false" tool="3" flavor2="0">
       </item>

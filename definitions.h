@@ -15,6 +15,12 @@
 #define DEFINITIONS_H
 #include <libevdev.h>
 
+#define JETSON_STEER_PIN 32 //GPIO07 //pin32
+#define JETSON_DRIVE_PIN 33 // GPIO13 //pin33
+#define JETSON_IN1_PIN 29   // GPIO01 //pin 29, gpio5
+#define JETSON_IN2_PIN 31   //GPIO06 //pin 31, gpio6
+
+
 #define LIDAR_PORT "/dev/ttyUSB1"
 #define MOTOR_PORT "/dev/ttyUSB0"
 #define I2C_BUS 0x00
@@ -66,10 +72,10 @@
 
 #define NUMBER_OF_MODES 5
 
-#define JETSON_STEER_PIN GPIO07 //pin32
-#define JETSON_DRIVE_PIN GPIO13 //pin33
-#define JETSON_IN1_PIN GPIO01 //pin 29, gpio5
-#define JETSON_IN2_PIN GPIO06 //pin 31, gpio6
+//#define JETSON_STEER_PIN GPIO07 //pin32
+//#define JETSON_DRIVE_PIN GPIO13 //pin33
+//#define JETSON_IN1_PIN GPIO01 //pin 29, gpio5
+//#define JETSON_IN2_PIN GPIO06 //pin 31, gpio6
 
 #ifdef __cplusplus
 extern "C" {

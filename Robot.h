@@ -45,8 +45,8 @@ public:
     int set_steering_motor_speed(int speed);
     int change_speed(int speed);
     int turn(int angle);
-    const driving_direction get_driving_direction(){return m_driving_direction;};
-    void set_driving_direction(driving_direction direction){m_driving_direction = direction;};
+    const Direction get_driving_direction(){return m_driving_direction;};
+    void set_driving_direction(Direction direction){m_driving_direction = direction;};
     void toggle_disconnected(){
         if (m_disconnected) m_disconnected=false; else m_disconnected=true; 
 #ifdef DEBUG 
@@ -61,7 +61,7 @@ public:
 
     mode toggle_mode();
     mode increment_mode(mode current_mode);
-    driving_direction toggle_driving_direction();
+    Direction toggle_driving_direction();
 
 private:
     
@@ -78,8 +78,8 @@ private:
     int m_max_speed;
     int m_drive_motor_speed;
     bool m_driving;
-    driving_direction m_driving_direction;
-    command m_command;
+    Direction m_driving_direction;
+    Command m_command;
     bool m_lidar_on;
    
     mode m_current_mode;
