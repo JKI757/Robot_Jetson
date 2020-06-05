@@ -9,7 +9,7 @@
 
 #include "EventHandler.h"
 #define DEBUG
-#undef EVENT_DEBUG
+#define EVENT_DEBUG
 
 EventHandler::EventHandler() {
     kill = false;

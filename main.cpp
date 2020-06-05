@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     std::shared_ptr<Robot> r = std::make_shared<Robot>();
     
 
-    evh->init("/dev/input/event2", r);
+    evh->init(INPUT_DEVICE, r);
     evh->event_loop();
     
     return 0;
