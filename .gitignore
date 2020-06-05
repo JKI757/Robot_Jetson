@@ -1,6 +1,2 @@
-*.o
-*.o.d
-build
 build/
 dist/
-dist

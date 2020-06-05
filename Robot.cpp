@@ -8,7 +8,6 @@
 
 #include "Robot.h"
 #define DEBUG
-
 Robot::Robot() {
     init();
 }
@@ -26,7 +25,7 @@ int Robot::init() {
     m_turn_angle = 0;
     m_heading = 0;
     m_speed = 0;
-    m_max_speed = 255;
+    m_max_speed = 100;
     m_drive_motor_speed = 0;
     m_driving = false;
     m_lidar_on = false;
@@ -39,8 +38,6 @@ int Robot::init() {
        JETSON_IN1_PIN, 
        JETSON_IN2_PIN, 
        JETSON_STEER_PIN,
-       1000,
-       2000,
        0,
        255);
 #ifdef LIDAR
@@ -69,22 +66,6 @@ int Robot::deinit() {
     return 0;
 }
 
-int Robot::rad_to_deg(float rad) {
-    int deg = 0;
-
-    return deg;
-}
-
-float Robot::deg_to_rad(int deg) {
-    float rad = 0.0;
-
-
-    return rad;
-}
-
-int angle_trunc(int angle) {
-    return (angle % 360);
-}
 
 void Robot::drive() {
     m_driving = true;
@@ -93,56 +74,44 @@ void Robot::drive() {
         motor->run(m_driving_direction);
     }
 #ifdef DEBUG
-    std::cout << "Driving " << m_driving_direction << " speed: " << m_drive_motor_speed << std::endl;
+    std::cout << "Robot Driving " << m_driving_direction << " speed: " << m_drive_motor_speed << std::endl;
 #endif
 }
 
-int Robot::turn_right(int angle) {
+void Robot::turn_right(int amount) {
 
-    int new_angle = 0;
     //
-    //    if (!m_disconnected) {
-    //        steering_motor->run(FORWARD);
-    //    }
 #ifdef DEBUG
-    std::cout << "turning right" << std::endl;
+    std::cout << "Robot turning right: " << amount << std::endl;
+#endif
+    if (!m_disconnected) {
+        motor->turnRight(amount);
+    }
+}
+
+void Robot::turn_left(int amount) {
+#ifdef DEBUG
+    std::cout << "Robot turning left : " << amount << std::endl;
 #endif
     if (!m_disconnected) {
 
-        motor->turnRight(angle);
+        motor->turnLeft(amount);
     }
-    return new_angle;
 }
 
-int Robot::turn_left(int angle) {
-    int new_angle = 0;
+void Robot::turn_zero() {
 #ifdef DEBUG
-    std::cout << "turning left : " << std::endl;
+    std::cout << "Robot center steering : " << std::endl;
 #endif
 
-    //    if (!m_disconnected) {
-    //        steering_motor->run(AdafruitDCMotor::kBackward);
-    //    }
     if (!m_disconnected) {
-
-        motor->turnLeft(angle);
+        motor->turnAbsolute(CENTER_STEER);
     }
-    return new_angle;
 }
 
-int Robot::turn_zero() {
+void Robot::drive_forward(int speed) {
 #ifdef DEBUG
-    std::cout << "turning zero : " << std::endl;
-#endif
-
-//    if (!m_disconnected) {
-//        motor->turnAbsolute(0);
-//    }
-}
-
-int Robot::drive_forward(int speed) {
-#ifdef DEBUG
-    std::cout << "driving forward speed: " << speed << std::endl;
+    std::cout << "Robot driving forward speed: " << speed << std::endl;
 #endif
     set_driving_direction(FORWARD);
 
@@ -150,13 +119,11 @@ int Robot::drive_forward(int speed) {
         motor->setDriveSpeed(speed);
         motor->run(FORWARD);
     }
-    return m_drive_motor_speed;
-
 }
 
-int Robot::drive_reverse(int speed) {
+void Robot::drive_reverse(int speed) {
 #ifdef DEBUG
-    std::cout << "driving reverse speed: " << speed << std::endl;
+    std::cout << "Robot driving reverse speed: " << speed << std::endl;
 #endif
     set_driving_direction(BACKWARD);
 
@@ -164,33 +131,25 @@ int Robot::drive_reverse(int speed) {
         motor->setDriveSpeed(speed);
         motor->run(BACKWARD);
     }
-    return m_drive_motor_speed;
-
 }
 
-int Robot::drive_brake() {
+void Robot::drive_brake() {
 #ifdef DEBUG
     std::cout << "braking" << std::endl;
 #endif
     motor->stop();
-
 }
 
-int Robot::change_speed(int speed) {
-    //    m_speed += speed;
+void Robot::change_speed(int speed) {
     m_drive_motor_speed = speed;
     motor->setDriveSpeed(speed);
-    return m_drive_motor_speed;
 }
 
-int Robot::set_drive_motor_speed(int speed) {
+void Robot::set_drive_motor_speed(int speed) {
     m_drive_motor_speed = speed;
+    motor->setDriveSpeed(speed);
 }
 
-int Robot::turn(int angle) {
-    m_turn_angle = angle_trunc(m_turn_angle + angle);
-    return m_turn_angle;
-}
 
 mode Robot::get_mode() {
     return m_current_mode;
@@ -231,9 +190,8 @@ std::string Robot::get_text_mode() {
     }
 }
 
-mode Robot::set_mode(mode m) {
+void Robot::set_mode(mode m) {
     m_current_mode = m;
-    return m_current_mode;
 }
 
 mode Robot::toggle_mode() {

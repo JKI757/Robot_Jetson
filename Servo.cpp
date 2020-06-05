@@ -11,6 +11,7 @@
  */
 
 #include "Servo.hpp"
+#define DEBUG
 
 Servo_Jetson::Servo_Jetson() = default;
 
@@ -34,8 +35,8 @@ Servo_Jetson::Servo_Jetson(std::shared_ptr<GPIO::PWM> steer, bool setup){
     this->Steer_PWM = steer;
     this->minUs = 1000;
     this->maxUs = 2000;
-    this->mapMin = 0;
-    this->mapMax = 255;
+    this->minInput = 0;
+    this->maxInput = 255;
     this->setup = false;
 
 }
@@ -51,7 +52,7 @@ Servo_Jetson::Servo_Jetson(std::shared_ptr<GPIO::PWM> steer, bool setup){
     
 }
 Servo_Jetson::Servo_Jetson(int pin, const unsigned short minUs, const unsigned short maxUs, 
-                                        const unsigned short mapMin, const unsigned short mapMax){
+                                        const unsigned short minInput, const unsigned short maxInput){
     //mapMin and mapMax are the expected range of values coming in as commands 
     //if you use these values, use the writeMappedValue method with a value in the range (mapMin, mapMax)
     //and the value will be mapped to (minUs, maxUs)
@@ -61,14 +62,14 @@ Servo_Jetson::Servo_Jetson(int pin, const unsigned short minUs, const unsigned s
     //1500 is centered for a normal steering servo for RC car
     this->minUs = minUs;
     this->maxUs = maxUs;
-    this->mapMin = mapMin;
-    this->mapMax = mapMax;
+    this->minInput = minInput;
+    this->maxInput = maxInput;
     this->setup = true;
 
     
 }
 
-Servo_Jetson::Servo_Jetson(std::shared_ptr<GPIO::PWM> steer, const unsigned short minUs, const unsigned short maxUs, const unsigned short mapMin, const unsigned short mapMax, bool setup){
+Servo_Jetson::Servo_Jetson(std::shared_ptr<GPIO::PWM> steer, const unsigned short minUs, const unsigned short maxUs, const unsigned short minInput, const unsigned short maxInput, bool setup){
     //mapMin and mapMax are the expected range of values coming in as commands 
     //if you use these values, use the writeMappedValue method with a value in the range (mapMin, mapMax)
     //and the value will be mapped to (minUs, maxUs)
@@ -76,39 +77,27 @@ Servo_Jetson::Servo_Jetson(std::shared_ptr<GPIO::PWM> steer, const unsigned shor
     //1500 is centered for a normal steering servo for RC car
     this->minUs = minUs;
     this->maxUs = maxUs;
-    this->mapMin = mapMin;
-    this->mapMax = mapMax;
+    this->minInput = minInput;
+    this->maxInput = maxInput;
     this->setup = false;
 }
 
 
-void Servo_Jetson::writeAngle(const unsigned short angle){\
-    const unsigned char mappedVal = mapAngle(angle);
-    this->Steer_PWM->ChangeFrequency(1.0/mappedVal);
-    this->Steer_PWM->start(.5);
-}
-void Servo_Jetson::writeUs(const unsigned short microseconds){
-     this->Steer_PWM->ChangeFrequency(1.0/microseconds);
-     this->Steer_PWM->start(.5);
-     
-}
-
-unsigned short Servo_Jetson::map(const short val){
-        if ((val <= mapMax) && (val >= mapMin) && (mapMax != mapMin)) {
-            return round( (float)minUs + ((float)(maxUs - minUs) / (float)(mapMax - mapMin)) * (float)(val - mapMin) );
-//            return round(((float) val - (float) mapMin) / ((float) mapMax - (float) mapMin) * ((float) minUs - (float) maxUs) + (float) mapMin);
-        } else return -1;
-    }
-unsigned short Servo_Jetson::mapAngle(const short val){
-        if ((val <= 360) && (val >= 0)) {\
-            return round(((float) val - (float) 0) / ((float) 360 - (float) 0) * ((float) minUs - (float) maxUs) + (float) minUs);
-        } else return -1;
+unsigned short Servo_Jetson::map(const unsigned short val){
+        if ((val <= maxInput) && (val >= minInput) && (maxInput != minInput)) {
+            return (float)((float)(val - minInput) * (float)(maxUs - minUs) / (float)(maxInput - minInput) + minUs);
+        } else return 0;
     }
 void Servo_Jetson::writeMappedValue(const short val){
-    std::cout << "value passed into write mapped value: " << val << std::endl;
+#ifdef DEBUG
+        std::cout << "value passed into write mapped value: " << val << std::endl;
+
+#endif 
     //takes a value mapped between minRange and maxRange to minUs and maxUs and calculates a microsecond value from there
     unsigned short mappedVal = map(val);
+#ifdef DEBUG
     std::cout << "mapped value: " << mappedVal << std::endl;
-    this->Steer_PWM->ChangeFrequency(mappedVal);
-    this->Steer_PWM->start(.5);
+#endif 
+//    this->Steer_PWM->ChangeFrequency(mappedVal);
+    this->Steer_PWM->start(1000000.0/mappedVal, 20);
 }

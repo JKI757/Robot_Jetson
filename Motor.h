@@ -37,8 +37,6 @@ public:
         int DriveIn1Pin,
         int DriveIn2Pin, 
         int SteeringPWMPin,
-        const unsigned short minUs,
-        const unsigned short maxUs,
         const unsigned short mapMin,
         const unsigned short mapMax);
 
@@ -62,13 +60,8 @@ private:
     std::unique_ptr<L298N_Jetson> drive;
     short currentSpeed;
     Direction currentDirection;
+    unsigned short map(const unsigned short val, const unsigned short minInput, const unsigned short maxInput,
+                                                    const unsigned short minOutput, const unsigned short maxOutput);
 
-    int map(int val, int a, int b, int c, int d) {
-
-        if ((val <= b) && (val >= a) && (b != a)) {\
-            return round(((float) val - (float) a) / ((float) b - (float) a) * ((float) d - (float) c) + (float) c);
-        } else return -1;
-    }
 
 };
-

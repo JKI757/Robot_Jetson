@@ -7,6 +7,7 @@
  */
 #ifndef ROBOT_H
 #define ROBOT_H
+#undef LIDAR 
 
 #include <iostream>
 #include <memory>
@@ -29,22 +30,19 @@ public:
     
     int init();
     int deinit();
-
-    int rad_to_deg(float rad);
-    float deg_to_rad(int deg);
     
     void drive();
-    int turn_right(int speed);
-    int turn_left(int speed);
-    int turn_zero();
-    int drive_forward(int speed);
-    int drive_reverse(int speed);
-    int drive_brake();
+    void turn_right(int speed);
+    void turn_left(int speed);
+    void turn_zero();
+    void drive_forward(int speed);
+    void drive_reverse(int speed);
+    void drive_brake();
 
-    int set_drive_motor_speed(int speed);
-    int set_steering_motor_speed(int speed);
-    int change_speed(int speed);
-    int turn(int angle);
+    void set_drive_motor_speed(int speed);
+    void set_steering_motor_speed(int speed);
+    void change_speed(int speed);
+    void turn(int amount);
     const Direction get_driving_direction(){return m_driving_direction;};
     void set_driving_direction(Direction direction){m_driving_direction = direction;};
     void toggle_disconnected(){
@@ -57,7 +55,7 @@ public:
     void set_driving(bool d){m_driving = d;};
     mode get_mode();
     std::string get_text_mode();
-    mode set_mode(mode m);
+    void set_mode(mode m);
 
     mode toggle_mode();
     mode increment_mode(mode current_mode);
